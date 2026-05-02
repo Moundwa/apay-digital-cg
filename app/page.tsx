@@ -19,11 +19,11 @@ export default function Home() {
       desc: "Cartes PSN Wallet pour acheter jeux, DLC et abonnements",
       type: "liste",
       produits: [
-        { nom: "PSN 10$", prixTexte: "8 000 FCFA" },
+        { nom: "PSN 10$", prixTexte: "7 500 FCFA" },
         { nom: "PSN 20$", prixTexte: "15 000 FCFA" },
-        { nom: "PSN 25$", prixTexte: "17 500 FCFA" },
-        { nom: "PSN 50$", prixTexte: "35 000 FCFA" },
-        { nom: "PSN 100$", prixTexte: "70 000 FCFA" }
+        { nom: "PSN 25$", prixTexte: "18 750 FCFA" },
+        { nom: "PSN 50$", prixTexte: "37 500 FCFA" },
+        { nom: "PSN 100$", prixTexte: "75 000 FCFA" }
       ]
     },
     {
@@ -33,9 +33,9 @@ export default function Home() {
       type: "liste",
       produits: [
         { nom: "Xbox 10$", prixTexte: "7 500 FCFA" },
-        { nom: "Xbox 25$", prixTexte: "17 000 FCFA" },
-        { nom: "Xbox 50$", prixTexte: "34 000 FCFA" },
-        { nom: "Xbox 100$", prixTexte: "68 000 FCFA" }
+        { nom: "Xbox 25$", prixTexte: "18 750 FCFA" },
+        { nom: "Xbox 50$", prixTexte: "37 500 FCFA" },
+        { nom: "Xbox 100$", prixTexte: "75 000 FCFA" }
       ]
     },
     {
@@ -44,9 +44,9 @@ export default function Home() {
       desc: "Abonnements Netflix pour toute la famille",
       type: "liste",
       produits: [
-        { nom: "Netflix 1 Mois", prixTexte: "3 500 FCFA" },
-        { nom: "Netflix 3 Mois", prixTexte: "10 000 FCFA" },
-        { nom: "Netflix 12 Mois", prixTexte: "38 000 FCFA" }
+        { nom: "Netflix 1 Mois", prixTexte: "3 750 FCFA" },
+        { nom: "Netflix 3 Mois", prixTexte: "11 000 FCFA" },
+        { nom: "Netflix 12 Mois", prixTexte: "42 000 FCFA" }
       ]
     },
     {
@@ -58,30 +58,33 @@ export default function Home() {
         {
           nom: "Free Fire",
           offres: [
-            { nom: "100 Diamants", prixTexte: "700 FCFA" },
-            { nom: "210 Diamants", prixTexte: "1 300 FCFA" },
-            { nom: "310 Diamants", prixTexte: "1 800 FCFA" },
-            { nom: "520 Diamants", prixTexte: "3 000 FCFA" },
-            { nom: "1060 Diamants", prixTexte: "6 000 FCFA" },
-            { nom: "2180 Diamants", prixTexte: "12 000 FCFA" }
+            { nom: "100 Diamants", prixTexte: "1 000 FCFA" },
+            { nom: "210 Diamants", prixTexte: "2 000 FCFA" },
+            { nom: "310 Diamants", prixTexte: "2 500 FCFA" },
+            { nom: "520 Diamants", prixTexte: "4 000 FCFA" },
+            { nom: "1060 Diamants", prixTexte: "8 000 FCFA" },
+            { nom: "2180 Diamants", prixTexte: "16 500 FCFA" }
           ]
         },
         {
           nom: "PUBG Mobile",
           offres: [
-            { nom: "325 UC", prixTexte: "2 500 FCFA" },
-            { nom: "660 UC", prixTexte: "5 500 FCFA" },
-            { nom: "1800 UC", prixTexte: "14 000 FCFA" }
+            { nom: "60 UC", prixTexte: "1 000 FCFA" },
+            { nom: "325 UC", prixTexte: "3 750 FCFA" },
+            { nom: "660 UC", prixTexte: "7 500 FCFA" },
+            { nom: "1800 UC", prixTexte: "18 750 FCFA" }
           ]
         },
         {
           nom: "Mobile Legends",
           offres: [
-            { nom: "165 Diamonds", prixTexte: "1 500 FCFA" },
-            { nom: "275 Diamonds", prixTexte: "3 000 FCFA" },
-            { nom: "565 Diamonds", prixTexte: "6 000 FCFA" },
-            { nom: "1163 Diamonds", prixTexte: "12 000 FCFA" }
-          ]
+            { nom: "86 Diamants", prixTexte: "1 325 FCFA" },
+            { nom: "172 Diamants", prixTexte: "2 475 FCFA" },
+            { nom: "257 Diamants", prixTexte: "3 750 FCFA" },
+            { nom: "570 Diamants", prixTexte: "7 725 FCFA" },
+            { nom: "716 Diamants", prixTexte: "9 225 FCFA" },
+            { nom: "1164 Diamants", prixTexte: "12 875 FCFA" },
+           ]
         }
       ]
     }
@@ -232,7 +235,7 @@ export default function Home() {
         </footer>
 
         <a href={urlGlobal} target="_blank" className="fixed bottom-6 right-6 bg-green-500 p-4 rounded-full glow hover:scale-110 transition">
-          <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
         </a>
 
         {showModal && (
