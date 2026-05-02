@@ -19,11 +19,11 @@ export default function Home() {
       desc: "Cartes PSN Wallet pour acheter jeux, DLC et abonnements",
       type: "liste",
       produits: [
-        { nom: "PSN 10$", prixTexte: "7 500 FCFA" },
-        { nom: "PSN 20$", prixTexte: "15 000 FCFA" },
-        { nom: "PSN 25$", prixTexte: "18 750 FCFA" },
-        { nom: "PSN 50$", prixTexte: "37 500 FCFA" },
-        { nom: "PSN 100$", prixTexte: "75 000 FCFA" }
+        { nom: "PSN 10€", prixTexte: "7 780 FCFA" },
+        { nom: "PSN 20€", prixTexte: "15 560 FCFA" },
+        { nom: "PSN 30€", prixTexte: "23 340 FCFA" },
+        { nom: "PSN 50€", prixTexte: "36 000 FCFA" },
+        { nom: "PSN 100€", prixTexte: "72 500 FCFA" }
       ]
     },
     {
@@ -32,10 +32,11 @@ export default function Home() {
       desc: "Cartes Xbox Live pour Game Pass, jeux et contenus",
       type: "liste",
       produits: [
-        { nom: "Xbox 10$", prixTexte: "7 500 FCFA" },
-        { nom: "Xbox 25$", prixTexte: "18 750 FCFA" },
-        { nom: "Xbox 50$", prixTexte: "37 500 FCFA" },
-        { nom: "Xbox 100$", prixTexte: "75 000 FCFA" }
+        { nom: "Xbox 10€", prixTexte: "7 780 FCFA" },
+        { nom: "Xbox 20€", prixTexte: "15 560 FCFA" },
+        { nom: "Xbox 30€", prixTexte: "23 340 FCFA" },
+        { nom: "Xbox 50€", prixTexte: "36 000 FCFA" },
+        { nom: "Xbox 100€", prixTexte: "72 500 FCFA" }
       ]
     },
     {
@@ -44,9 +45,9 @@ export default function Home() {
       desc: "Abonnements Netflix pour toute la famille",
       type: "liste",
       produits: [
-        { nom: "Netflix 1 Mois", prixTexte: "3 750 FCFA" },
-        { nom: "Netflix 3 Mois", prixTexte: "11 000 FCFA" },
-        { nom: "Netflix 12 Mois", prixTexte: "42 000 FCFA" }
+        { nom: "Netflix 1 Mois", prixTexte: "3 500 FCFA" },
+        { nom: "Netflix 3 Mois", prixTexte: "10 000 FCFA" },
+        { nom: "Netflix 12 Mois", prixTexte: "37 500 FCFA" }
       ]
     },
     {
