@@ -82,6 +82,7 @@ export default function Home() {
             { nom: "86 Diamants", prixTexte: "1 325 FCFA" },
             { nom: "172 Diamants", prixTexte: "2 475 FCFA" },
             { nom: "257 Diamants", prixTexte: "3 750 FCFA" },
+            { nom: "336 Diamants", prixTexte: "4 500 FCFA" },
             { nom: "570 Diamants", prixTexte: "7 725 FCFA" },
             { nom: "716 Diamants", prixTexte: "9 225 FCFA" },
             { nom: "1164 Diamants", prixTexte: "12 875 FCFA" },
