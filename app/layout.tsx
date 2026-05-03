@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Apay Digital - Codes & Abonnements Instantanés",
   description: "Netflix Premium 4K à 3 500 FCFA. Free Fire, PSN, Xbox. Codes en 5 min. Paiement Mobile Money au Congo.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
   },
   openGraph: {
     title: "Apay Digital v1.5",
