@@ -6,7 +6,7 @@ export default function SocialProof() {
   
   // Animation compteur au montage
   useEffect(() => {
-    const targets = { commandes: 247, clients: 54, livraison: 176 }
+    const targets = { commandes: 247, clients: 54, livraison: 5 }
     const duration = 1500
     const steps = 30
     let currentStep = 0
