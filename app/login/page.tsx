@@ -19,8 +19,8 @@ export default function LoginPage() {
         email,
         password,
         options: {
-          emailRedirectTo: ${location.origin}/auth/callback,
-        },
+          emailRedirectTo: ${location.origin}/auth/callback
+        }
       })
       if (error) {
         alert(error.message)
@@ -30,7 +30,7 @@ export default function LoginPage() {
     } else {
       const { error } = await supabase.auth.signInWithPassword({
         email,
-        password,
+        password
       })
       if (error) {
         alert(error.message)
@@ -39,3 +39,46 @@ export default function LoginPage() {
       }
     }
   }
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <form onSubmit={handleAuth} className="w-full max-w-md space-y-4 rounded-lg bg-white p-8 shadow">
+        <h1 className="text-2xl font-bold text-center">
+          {isSignUp ? 'Créer un compte' : 'Connexion'}
+        </h1>
+        
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full rounded border p-2"
+          required
+        />
+        
+        <input
+          type="password"
+          placeholder="Mot de passe"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full rounded border p-2"
+          required
+        />
+        
+        <button
+          type="submit"
+          className="w-full rounded bg-black p-2 text-white hover:bg-gray-800"
+        >
+          {isSignUp ? 'S’inscrire' : 'Se connecter'}
+        </button>
+        
+        <p
+          onClick={() => setIsSignUp(!isSignUp)}
+          className="cursor-pointer text-center text-sm text-gray-600"
+        >
+          {isSignUp ? 'Déjà un compte ? Connecte-toi' : 'Pas de compte ? Inscris-toi'}
+        </p>
+      </form>
+    </div>
+  )
+}
