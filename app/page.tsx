@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import SocialProof from '@/components/SocialProof'
 
 export default function Home() {
   const NUMERO_WHATSAPP = "242069678759"
@@ -155,6 +156,8 @@ export default function Home() {
             <span className="bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full text-sm">✓ Support 7j/7</span>
           </div>
         </section>
+
+        <SocialProof />
 
         <section id="boutique" className="max-w-6xl mx-auto px-4 py-16">
           <h3 className="font-gaming text-3xl text-center mb-12">Nos Catégories</h3>
