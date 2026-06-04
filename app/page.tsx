@@ -19,11 +19,11 @@ export default function Home() {
       desc: "Cartes PSN Wallet pour acheter jeux, DLC et abonnements",
       type: "liste",
       produits: [
-        { nom: "PSN 10€", prixTexte: "7 780 FCFA" },
-        { nom: "PSN 20€", prixTexte: "15 560 FCFA" },
-        { nom: "PSN 30€", prixTexte: "23 340 FCFA" },
-        { nom: "PSN 50€", prixTexte: "36 000 FCFA" },
-        { nom: "PSN 100€", prixTexte: "72 500 FCFA" }
+        { nom: "PSN 10€", prixTexte: "7 980 FCFA" },
+        { nom: "PSN 20€", prixTexte: "15 760 FCFA" },
+        { nom: "PSN 30€", prixTexte: "23 540 FCFA" },
+        { nom: "PSN 50€", prixTexte: "36 200 FCFA" },
+        { nom: "PSN 100€", prixTexte: "72 700 FCFA" }
       ]
     },
     {
@@ -32,11 +32,11 @@ export default function Home() {
       desc: "Cartes Xbox Live pour Game Pass, jeux et contenus",
       type: "liste",
       produits: [
-        { nom: "Xbox 10€", prixTexte: "7 780 FCFA" },
-        { nom: "Xbox 20€", prixTexte: "15 560 FCFA" },
-        { nom: "Xbox 30€", prixTexte: "23 340 FCFA" },
-        { nom: "Xbox 50€", prixTexte: "36 000 FCFA" },
-        { nom: "Xbox 100€", prixTexte: "72 500 FCFA" }
+        { nom: "Xbox 10€", prixTexte: "7 980 FCFA" },
+        { nom: "Xbox 20€", prixTexte: "15 760 FCFA" },
+        { nom: "Xbox 30€", prixTexte: "23 540 FCFA" },
+        { nom: "Xbox 50€", prixTexte: "36 200 FCFA" },
+        { nom: "Xbox 100€", prixTexte: "72 700 FCFA" }
       ]
     },
     {
@@ -59,21 +59,21 @@ export default function Home() {
         {
           nom: "Free Fire",
           offres: [
-            { nom: "100 Diamants", prixTexte: "1 000 FCFA" },
-            { nom: "210 Diamants", prixTexte: "2 000 FCFA" },
-            { nom: "310 Diamants", prixTexte: "2 500 FCFA" },
-            { nom: "520 Diamants", prixTexte: "4 000 FCFA" },
-            { nom: "1060 Diamants", prixTexte: "8 000 FCFA" },
-            { nom: "2180 Diamants", prixTexte: "16 500 FCFA" }
+            { nom: "100 Diamants", prixTexte: "1 200 FCFA" },
+            { nom: "210 Diamants", prixTexte: "2 200 FCFA" },
+            { nom: "310 Diamants", prixTexte: "2 700 FCFA" },
+            { nom: "520 Diamants", prixTexte: "4 200 FCFA" },
+            { nom: "1060 Diamants", prixTexte: "8 200 FCFA" },
+            { nom: "2180 Diamants", prixTexte: "16 700 FCFA" }
           ]
         },
         {
           nom: "PUBG Mobile",
           offres: [
-            { nom: "60 UC", prixTexte: "1 000 FCFA" },
-            { nom: "325 UC", prixTexte: "3 750 FCFA" },
-            { nom: "660 UC", prixTexte: "7 500 FCFA" },
-            { nom: "1800 UC", prixTexte: "18 750 FCFA" }
+            { nom: "60 UC", prixTexte: "1 200 FCFA" },
+            { nom: "325 UC", prixTexte: "3 950 FCFA" },
+            { nom: "660 UC", prixTexte: "7 700 FCFA" },
+            { nom: "1800 UC", prixTexte: "18 950 FCFA" }
           ]
         },
         {
