@@ -6,7 +6,7 @@ export default function SocialProof() {
   
   // Animation compteur au montage
   useEffect(() => {
-    const targets = { commandes: 247, clients: 54, livraison: 5 }
+    const targets = { commandes: 247, clients: 54, livraison: 8 }
     const duration = 1500
     const steps = 30
     let currentStep = 0
@@ -29,7 +29,7 @@ export default function SocialProof() {
     <section className="bg-gray-900/50 border-y border-gray-800">
       <div className="max-w-4xl mx-auto px-4 py-10">
         <p className="text-center text-gray-400 text-sm mb-6">
-          Déjà adopté par les gamers de Pointe-Noire 🇨🇬
+          Déjà adopté par les gamers de Pointe-Noire
         </p>
         
         <div className="grid grid-cols-3 gap-4 text-center">
