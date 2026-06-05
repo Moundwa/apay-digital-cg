@@ -75,9 +75,12 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-gray-500 text-xs text-center mt-6">
-          Pas encore de compte ? Contacte-nous sur WhatsApp
-        </p>
+       <p className="text-gray-500 text-xs text-center mt-6">
+  Pas encore de compte ?{' '}
+  <Link href="/signup" className="text-cyan-400 hover:text-cyan-300">
+    Inscris-toi
+  </Link>
+</p>
       </div>
     </div>
   )
