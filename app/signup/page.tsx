@@ -15,42 +15,41 @@ export default function SignupPage() {
   const supabase = createClient()
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+  e.preventDefault()
+  setLoading(true)
+  setError(null)
 
-    if (password !== confirmPassword) {
-      setError('Les mots de passe ne correspondent pas')
-      setLoading(false)
-      return
-    }
-
-    if (password.length < 6) {
-      setError('Le mot de passe doit faire 6 caractères minimum')
-      setLoading(false)
-      return
-    }
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: ${window.location.origin}/auth/callback
-      }
-    })
-
-    if (error) {
-      setError(error.message === 'User already registered' 
-        ? 'Ce compte existe déjà. Connecte-toi.' 
-        : 'Erreur lors de l’inscription'
-      )
-      setLoading(false)
-    } else {
-      setSuccess(true)
-      setLoading(false)
-    }
+  if (password !== confirmPassword) {
+    setError('Les mots de passe ne correspondent pas')
+    setLoading(false)
+    return
   }
 
+  if (password.length < 6) {
+    setError('Le mot de passe doit faire 6 caractères minimum')
+    setLoading(false)
+    return
+  }
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: ${window.location.origin}/auth/callback
+    }
+  })
+
+  if (error) {
+    setError(error.message === 'User already registered' 
+      ? 'Ce compte existe déjà. Connecte-toi.' 
+      : 'Erreur lors de l’inscription'
+    )
+    setLoading(false)
+  } else {
+    setSuccess(true)
+    setLoading(false)
+  }
+}
   if (success) {
     return (
       <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4">
