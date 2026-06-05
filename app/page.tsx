@@ -212,6 +212,7 @@ export default function Home() {
                     <h4 className="font-gaming text-2xl font-bold">{cat.titre}</h4>
                     <p className="text-gray-400 text-sm">{cat.desc}</p>
                   </div>
+                </div>
                 <div className="mt-6">
                   {cat.type === "liste" && cat.produits?.map((p, j) => (
                     <div key={j} className="flex justify-between items-center py-3 border-b border-gray-800 last:border-0">
