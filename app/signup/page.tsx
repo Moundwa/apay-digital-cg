@@ -12,7 +12,6 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
-  const router = useRouter()
   const supabase = createClient()
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -36,8 +35,8 @@ export default function SignupPage() {
       email,
       password,
       options: {
-        emailRedirectTo: ${location.origin}/auth/callback,
-      },
+        emailRedirectTo: ${window.location.origin}/auth/callback
+      }
     })
 
     if (error) {
@@ -61,9 +60,6 @@ export default function SignupPage() {
           <p className="text-gray-400 text-sm mb-6">
             On t’a envoyé un lien de confirmation à <span className="text-cyan-400">{email}</span>
           </p>
-          <p className="text-gray-500 text-xs">
-            Clique sur le lien pour activer ton compte Apay Digital
-          </p>
           <Link 
             href="/login"
             className="inline-block mt-6 bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-3 rounded-lg"
@@ -85,36 +81,30 @@ export default function SignupPage() {
         </div>
 
         <form onSubmit={handleSignup} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-cyan-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Mot de passe (6 caractères min)"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-cyan-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Confirmer le mot de passe"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-cyan-500 focus:outline-none"
-            />
-          </div>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-cyan-500 focus:outline-none"
+          />
+          <input
+            type="password"
+            placeholder="Mot de passe (6 caractères min)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-cyan-500 focus:outline-none"
+          />
+          <input
+            type="password"
+            placeholder="Confirmer le mot de passe"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-lg focus:border-cyan-500 focus:outline-none"
+          />
 
           {error && (
             <p className="text-red-400 text-sm text-center">{error}</p>
