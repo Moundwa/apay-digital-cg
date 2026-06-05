@@ -174,9 +174,18 @@ export default function Home() {
         <header className="sticky top-0 z-50 bg-gray-950/80 backdrop-blur border-b border-gray-800">
           <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <div className="flex items-center gap-3">
-              <img src="/logo-full.png" alt="Apay Digital CG" className="h-10 md:h-12" />
+              <a href="/">
+                <img src="/logo-full.png" alt="Apay Digital CG" className="h-10 md:h-12" />
+              </a>
             </div>
-            <a href="#contact" className="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold px-4 py-2 rounded-lg text-sm">Commander</a>
+            <div className="flex items-center gap-3">
+              <a href="/login" className="text-gray-300 hover:text-white font-semibold px-4 py-2 rounded-lg text-sm">
+                Se connecter
+              </a>
+              <a href="/signup" className="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold px-4 py-2 rounded-lg text-sm">
+                Créer un compte
+              </a>
+            </div>
           </div>
         </header>
         
@@ -203,7 +212,6 @@ export default function Home() {
                     <h4 className="font-gaming text-2xl font-bold">{cat.titre}</h4>
                     <p className="text-gray-400 text-sm">{cat.desc}</p>
                   </div>
-                </div>
                 <div className="mt-6">
                   {cat.type === "liste" && cat.produits?.map((p, j) => (
                     <div key={j} className="flex justify-between items-center py-3 border-b border-gray-800 last:border-0">
