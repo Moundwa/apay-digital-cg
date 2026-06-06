@@ -56,19 +56,22 @@ export default function Admin() {
   }
 
   const updateStatus = async (id: number, newStatus: string) => {
-    setUpdating(id)
-    const { error } = await supabase
-      .from('orders')
-      .update({ status: newStatus })
-      .eq('id', id)
+  setUpdating(id)
+  const { error } = await supabase
+    .from('orders')
+    .update({ 
+      status: newStatus,
+      delivered_at: newStatus === 'completed' ? new Date().toISOString() : null
+    })
+    .eq('id', id)
 
-    if (error) {
-      alert('Erreur: ' + error.message)
-    } else {
-      await fetchOrders() // Refresh la liste
-    }
-    setUpdating(null)
+  if (error) {
+    alert('Erreur: ' + error.message)
+  } else {
+    await fetchOrders()
   }
+  setUpdating(null)
+}
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
