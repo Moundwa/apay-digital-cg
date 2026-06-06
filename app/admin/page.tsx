@@ -33,7 +33,7 @@ export default function Admin() {
       }
 
       // Check si c'est bien un admin
-      if (user.email !== 'contact@apay-digital-cg.store') {
+      if (user.email !== 'admin@apay-digital-cg.store') {
         router.push('/')
         return
       }
