@@ -32,7 +32,7 @@ export default function Admin() {
         return
       }
 
-      // Check si c'est bien un admin
+      // Change cet email si besoin
       if (user.email !== 'admin@apay-digital-cg.store') {
         router.push('/')
         return
@@ -56,34 +56,34 @@ export default function Admin() {
   }
 
   const updateStatus = async (id: number, newStatus: string) => {
-  setUpdating(id)
-  const { error } = await supabase
-    .from('orders')
-    .update({ 
-      status: newStatus,
-      delivered_at: newStatus === 'completed' ? new Date().toISOString() : null
-    })
-    .eq('id', id)
+    setUpdating(id)
+    const { error } = await supabase
+      .from('orders')
+      .update({ 
+        status: newStatus,
+        delivered_at: newStatus === 'completed' ? new Date().toISOString() : null
+      })
+      .eq('id', id)
 
-  if (error) {
-    alert('Erreur: ' + error.message)
-  } else {
-    await fetchOrders()
+    if (error) {
+      alert('Erreur: ' + error.message)
+    } else {
+      await fetchOrders()
+    }
+    setUpdating(null)
   }
-  setUpdating(null)
-}
 
   const deleteOrder = async (id: number) => {
-  if (!confirm('Supprimer cette commande ? Action définitive.')) return
-  
-  setUpdating(id)
-  const { error } = await supabase.from('orders').delete().eq('id', id)
-  
-  if (error) alert('Erreur: ' + error.message)
-  else await fetchOrders()
-  
-  setUpdating(null)
-}
+    if (!confirm('Supprimer cette commande ? Action définitive.')) return
+    
+    setUpdating(id)
+    const { error } = await supabase.from('orders').delete().eq('id', id)
+    
+    if (error) alert('Erreur: ' + error.message)
+    else await fetchOrders()
+    
+    setUpdating(null)
+  }
  
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -155,24 +155,45 @@ export default function Admin() {
                         <span className={`text-xs px-2 py-1 rounded-full ${
                           order.status === 'active' ? 'bg-yellow-500/20 text-yellow-400' : 
                           order.status === 'completed' ? 'bg-green-500/20 text-green-400' : 
+                          order.status === 'canceled' ? 'bg-orange-500/20 text-orange-400' :
                           'bg-gray-500/20 text-gray-400'
                         }`}>
-                          {order.status === 'active' ? 'En cours' : order.status === 'completed' ? 'Livré' : order.status}
+                          {order.status === 'active' ? 'En cours' : 
+                           order.status === 'completed' ? 'Livré' : 
+                           order.status === 'canceled' ? 'Annulé' : 
+                           order.status}
                         </span>
                       </td>
                       <td className="p-4">
-                        {order.status === 'active' && (
+                        <div className="flex gap-2 flex-wrap">
+                          {order.status === 'active' && (
+                            <>
+                              <button
+                                onClick={() => updateStatus(order.id, 'completed')}
+                                disabled={updating === order.id}
+                                className="bg-green-600 hover:bg-green-500 disabled:bg-gray-700 text-white px-3 py-1 rounded text-xs font-bold"
+                              >
+                                {updating === order.id ? '...' : 'Marquer Livré'}
+                              </button>
+                              <button
+                                onClick={() => updateStatus(order.id, 'canceled')}
+                                disabled={updating === order.id}
+                                className="bg-yellow-600 hover:bg-yellow-500 disabled:bg-gray-700 text-white px-3 py-1 rounded text-xs font-bold"
+                              >
+                                Annuler
+                              </button>
+                            </>
+                          )}
                           <button
-                            onClick={() => updateStatus(order.id, 'completed')}
+                            onClick={() => deleteOrder(order.id)}
                             disabled={updating === order.id}
-                            className="bg-green-600 hover:bg-green-500 disabled:bg-gray-700 text-white px-3 py-1 rounded text-xs font-bold"
+                            className="bg-red-600 hover:bg-red-500 disabled:bg-gray-700 text-white px-3 py-1 rounded text-xs font-bold"
                           >
-                            {updating === order.id ? '...' : 'Marquer Livré'}
+                            🗑️ Suppr
                           </button>
-                        )}
-                        {order.status === 'completed' && (
-                          <span className="text-green-400 text-xs">✓ Validé</span>
-                        )}
+                        </div>
+                        {order.status === 'completed' && <span className="text-green-400 text-xs mt-1 block">✓ Validé</span>}
+                        {order.status === 'canceled' && <span className="text-orange-400 text-xs mt-1 block">Annulé</span>}
                       </td>
                     </tr>
                   ))
