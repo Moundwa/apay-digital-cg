@@ -73,6 +73,18 @@ export default function Admin() {
   setUpdating(null)
 }
 
+  const deleteOrder = async (id: number) => {
+  if (!confirm('Supprimer cette commande ? Action définitive.')) return
+  
+  setUpdating(id)
+  const { error } = await supabase.from('orders').delete().eq('id', id)
+  
+  if (error) alert('Erreur: ' + error.message)
+  else await fetchOrders()
+  
+  setUpdating(null)
+}
+ 
   const handleLogout = async () => {
     await supabase.auth.signOut()
     router.push('/')
