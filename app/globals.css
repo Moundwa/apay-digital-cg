@@ -1,9 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Ton CSS custom après si t'en as */
-body {
-  background: #0a0a0a;
-  color: #ededed;
-}
