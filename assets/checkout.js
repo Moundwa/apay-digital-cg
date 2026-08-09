@@ -264,7 +264,7 @@
     } catch (err) {
       els.confirmBtn.disabled = false;
       els.confirmBtn.textContent = "Payer maintenant →";
-      showError("Impossible de lancer le paiement pour le moment. Réessaie dans un instant.");
+      showError(err.message || "Impossible de lancer le paiement pour le moment. Réessaie dans un instant.");
       console.error("create-payment error:", err);
     }
   }

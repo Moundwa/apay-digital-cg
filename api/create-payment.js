@@ -56,7 +56,8 @@ module.exports = async (req, res) => {
 
     if (!openpayRes.ok) {
       console.error("Erreur OpenPay:", openpayRes.status, openpayData);
-      res.status(502).json({ ok: false, error: openpayData.message || "Le paiement n'a pas pu être lancé." });
+      const detail = openpayData.message || openpayData.error || JSON.stringify(openpayData);
+      res.status(502).json({ ok: false, error: `OpenPay a refusé la demande (${openpayRes.status}) : ${detail}` });
       return;
     }
 
