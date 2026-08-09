@@ -27,11 +27,6 @@ function waLink(message){
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-function orderItem(label, price){
-  const msg = `Salut Apay Digital CG ! Je veux commander : ${label} (${price}).`;
-  window.open(waLink(msg), "_blank", "noopener");
-}
-
 // notifies APION's chat UI of what the visitor is currently looking at
 function notifyApionContext(id){
   const meta = GAME_META[id];
