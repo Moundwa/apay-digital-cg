@@ -106,11 +106,16 @@ body::after{
   gap:20px;
 }
 .logo{
-  display:flex; align-items:baseline; gap:6px;
+  display:flex; align-items:center; gap:10px;
   font-family:var(--font-display);
   font-weight:700; font-size:1.35rem; letter-spacing:-0.02em;
   white-space:nowrap;
 }
+.logo-icon{
+  height:36px; width:36px; border-radius:9px;
+  display:block; flex-shrink:0;
+}
+.logo-text{ display:flex; align-items:baseline; gap:6px; }
 .logo .a1{ color:var(--azure); }
 .logo .a2{ color:var(--paper); font-weight:500; opacity:0.85; }
 .logo .a3{
