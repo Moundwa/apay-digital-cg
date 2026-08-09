@@ -18,17 +18,21 @@ module.exports = async (req, res) => {
   try {
     const body = req.body || {};
     const reference = body.reference || body.data?.reference;
+    const externalId = body.external_id || body.externalId || body.external_customer_id;
     const rawStatus = (body.status || body.data?.status || "").toString().toLowerCase();
 
-    if (!reference) {
-      console.error("Callback OpenPay sans référence:", body);
+    if (!reference && !externalId) {
+      console.error("Callback OpenPay sans référence ni identifiant externe:", body);
       res.status(200).json({ ok: true });
       return;
     }
 
-    const order = await getOrder(reference);
+    let order = reference ? await getOrder(reference) : null;
+    if (!order && externalId) order = await getOrder(`ext:${externalId}`);
+    const lookupKey = reference || `ext:${externalId}`;
+
     if (!order) {
-      console.error("Callback pour une référence inconnue:", reference);
+      console.error("Callback pour une référence inconnue:", reference, externalId);
       res.status(200).json({ ok: true });
       return;
     }
@@ -51,11 +55,12 @@ module.exports = async (req, res) => {
       ];
       if (order.gameId) lines.push(`ID en jeu : ${escapeHtml(order.gameId)}`);
       if (order.server) lines.push(`Serveur/Zone : ${escapeHtml(order.server)}`);
-      lines.push(`Référence : ${escapeHtml(reference)}`);
+      lines.push(`Référence : ${escapeHtml(order.reference)}`);
       await notifyTelegram(lines.join("\n"));
     }
 
-    await setOrder(reference, updatedOrder);
+    await setOrder(order.reference, updatedOrder);
+    if (order.externalId) await setOrder(`ext:${order.externalId}`, updatedOrder);
     res.status(200).json({ ok: true });
   } catch (err) {
     console.error("Erreur callback:", err);

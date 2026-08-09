@@ -38,6 +38,8 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const externalId = `apay_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+
     const openpayRes = await fetch(OPENPAY_URL, {
       method: "POST",
       headers: {
@@ -46,9 +48,14 @@ module.exports = async (req, res) => {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        amount: String(numericAmount),
+        amount: numericAmount,
+        currency: "XAF",
         payment_phone_number: cleanPhone,
+        paymentPhoneNumber: cleanPhone,
         provider: String(provider).toUpperCase(),
+        external_id: externalId,
+        externalId: externalId,
+        external_customer_id: externalId,
       }),
     });
 
@@ -79,8 +86,9 @@ module.exports = async (req, res) => {
       .toString()
       .toLowerCase();
 
-    await setOrder(reference, {
+    const orderRecord = {
       reference,
+      externalId,
       productLabel,
       amount: numericAmount,
       phone: cleanPhone,
@@ -91,7 +99,9 @@ module.exports = async (req, res) => {
       status: initialStatus,
       createdAt: new Date().toISOString(),
       notified: false,
-    });
+    };
+    await setOrder(reference, orderRecord);
+    await setOrder(`ext:${externalId}`, orderRecord);
 
     res.status(200).json({ ok: true, reference, status: initialStatus });
   } catch (err) {
