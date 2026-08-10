@@ -1,4 +1,5 @@
 const { setOrder } = require("./_kv");
+const { notifyTelegram } = require("./_telegram");
 
 const OPENPAY_API_KEY = process.env.OPENPAY_API_KEY;
 const OPENPAY_URL = "https://api.openpay-cg.com/v1/transaction/payment";
@@ -38,7 +39,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const externalId = `apay_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    const orderId = `apay_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
     const openpayRes = await fetch(OPENPAY_URL, {
       method: "POST",
@@ -49,13 +50,11 @@ module.exports = async (req, res) => {
       },
       body: JSON.stringify({
         amount: numericAmount,
-        currency: "XAF",
         payment_phone_number: cleanPhone,
-        paymentPhoneNumber: cleanPhone,
         provider: String(provider).toUpperCase(),
-        external_id: externalId,
-        externalId: externalId,
-        external_customer_id: externalId,
+        customer_external_id: orderId,
+        customer: { name: contact, phone: cleanPhone },
+        metadata: { order_id: orderId, product: productLabel },
       }),
     });
 
@@ -88,7 +87,6 @@ module.exports = async (req, res) => {
 
     const orderRecord = {
       reference,
-      externalId,
       productLabel,
       amount: numericAmount,
       phone: cleanPhone,
@@ -100,8 +98,24 @@ module.exports = async (req, res) => {
       createdAt: new Date().toISOString(),
       notified: false,
     };
+
+    if (initialStatus === "success") {
+      orderRecord.notified = true;
+      const lines = [
+        "💰 <b>Nouvelle commande payée</b>",
+        `Produit : ${productLabel}`,
+        `Montant : ${numericAmount.toLocaleString("fr-FR")} FCFA`,
+        `Opérateur : ${String(provider).toUpperCase()}`,
+        `Tél. paiement : ${cleanPhone}`,
+        `Contact livraison : ${contact}`,
+      ];
+      if (gameId) lines.push(`ID en jeu : ${gameId}`);
+      if (server) lines.push(`Serveur/Zone : ${server}`);
+      lines.push(`Référence : ${reference}`);
+      await notifyTelegram(lines.join("\n"));
+    }
+
     await setOrder(reference, orderRecord);
-    await setOrder(`ext:${externalId}`, orderRecord);
 
     res.status(200).json({ ok: true, reference, status: initialStatus });
   } catch (err) {
