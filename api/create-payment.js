@@ -62,8 +62,10 @@ module.exports = async (req, res) => {
 
     if (!openpayRes.ok) {
       console.error("Erreur OpenPay:", openpayRes.status, openpayData);
-      const detail = openpayData.message || openpayData.error || JSON.stringify(openpayData);
-      res.status(502).json({ ok: false, error: `OpenPay a refusé la demande (${openpayRes.status}) : ${detail}` });
+      res.status(502).json({
+        ok: false,
+        error: "Le paiement n'a pas pu être lancé pour le moment. Vérifie ton numéro et réessaie, ou contacte-nous sur WhatsApp si ça persiste.",
+      });
       return;
     }
 
