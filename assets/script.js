@@ -161,6 +161,15 @@ document.addEventListener("DOMContentLoaded", () => {
         notifyApionContext(initialId);
       }
     }
+    // Réagit aux changements d'ancre en cours de navigation (ex: clic sur un lien
+    // du menu "Jeux Mobile ▾" alors qu'on est déjà sur cette page) — sans quoi
+    // seul un rechargement complet de la page mettait à jour l'onglet actif.
+    window.addEventListener("hashchange", () => {
+      const newHash = window.location.hash.replace("#", "");
+      if (newHash && document.getElementById(newHash)) {
+        activate(newHash, true);
+      }
+    });
   } else if (document.body.dataset.apionPage === "streaming") {
     // streaming.html has a single product (Netflix), no tabs to click
     notifyApionContext("netflix");
