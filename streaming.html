@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Streaming — Netflix, Spotify & Disney+ | Apay Digital CG</title>
-<meta name="description" content="Abonnements Netflix Premium 4K, Spotify Premium et Disney+. Livraison code en 5 min via WhatsApp, paiement Mobile Money.">
+<meta name="description" content="Abonnements Netflix Premium 4K, Spotify Premium et Disney+. Paiement Mobile Money automatique, code livré en 5 min.">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#121019">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon-192.png">
 <link rel="canonical" href="https://www.apay-digital-cg.store/streaming.html">
 <meta property="og:type" content="website">
@@ -16,17 +18,27 @@
 <meta property="og:locale" content="fr_FR">
 <meta property="og:url" content="https://www.apay-digital-cg.store/streaming.html">
 <meta property="og:title" content="Streaming — Netflix, Spotify & Disney+">
-<meta property="og:description" content="Abonnements Netflix Premium 4K, Spotify Premium et Disney+. Livraison code en 5 min via WhatsApp, paiement Mobile Money.">
+<meta property="og:description" content="Abonnements Netflix Premium 4K, Spotify Premium et Disney+. Paiement Mobile Money automatique, code livré en 5 min.">
 <meta property="og:image" content="https://www.apay-digital-cg.store/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Streaming — Netflix, Spotify & Disney+">
-<meta name="twitter:description" content="Abonnements Netflix Premium 4K, Spotify Premium et Disney+. Livraison code en 5 min via WhatsApp, paiement Mobile Money.">
+<meta name="twitter:description" content="Abonnements Netflix Premium 4K, Spotify Premium et Disney+. Paiement Mobile Money automatique, code livré en 5 min.">
 <meta name="twitter:image" content="https://www.apay-digital-cg.store/assets/img/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.apay-digital-cg.store/"},
+    {"@type": "ListItem", "position": 2, "name": "Streaming", "item": "https://www.apay-digital-cg.store/streaming.html"}
+  ]
+}
+</script>
 </head>
 <body data-apion-page="streaming">
 
@@ -73,7 +85,7 @@
       </ul>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-primary btn-sm" href="https://wa.me/242069678759?text=Salut%20Apay%20Digital%20CG!%20Je%20veux%20commander%20un%20code%20ou%20une%20recharge." target="_blank" rel="noopener">Commander</a>
+      <a class="btn btn-primary btn-sm" href="#produits">Commander</a>
       <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -89,12 +101,12 @@
       <div>
         <span class="eyebrow">📺 Netflix, Spotify & Disney+</span>
         <h1 style="font-size:clamp(1.8rem,3.4vw,2.6rem);">Le streaming pour <span class="accent">toute la famille.</span></h1>
-        <p class="lead">Abonnements Netflix Premium 4K, Spotify Premium et Disney+, livrés sur WhatsApp en 5 minutes.</p>
+        <p class="lead">Abonnements Netflix Premium 4K, Spotify Premium et Disney+, paiement Mobile Money direct, livrés en 5 minutes.</p>
       </div>
       <div class="hero-game-visual">
         <div class="hgv-glow" id="hgvGlow" style="background:radial-gradient(circle at 50% 45%, rgba(229,9,20,0.35), transparent 65%);"></div>
         <div class="hgv-card">
-          <img id="hgvImg" src="assets/img/netflix-art.jpg" alt="Netflix">
+          <img id="hgvImg" src="assets/img/netflix-art.webp" alt="Netflix">
         </div>
         <div class="hgv-chip" id="hgvChip">
           <span class="hgv-chip-icon">📺</span>
@@ -107,7 +119,7 @@
     </div>
   </section>
 
-  <section class="section tight">
+  <section class="section tight" id="produits">
     <div class="wrap">
 
       <div class="tab-bar">
@@ -118,10 +130,10 @@
 
       <!-- NETFLIX -->
       <div class="tab-panel active" id="netflix">
-        <div class="game-panel" style="background-image:url('assets/img/netflix-art.jpg');">
+        <div class="game-panel" style="background-image:url('assets/img/netflix-art.webp');">
           <div class="game-intro">
             <div class="game-intro-row">
-              <img class="game-thumb" src="assets/img/netflix-art.jpg" alt="Netflix">
+              <img class="game-thumb" src="assets/img/netflix-art.webp" alt="Netflix" loading="lazy" decoding="async">
               <div>
                 <h2>📺 Netflix</h2>
                 <p>Abonnement Premium 4K, profils multiples, tout le catalogue.</p>
@@ -139,10 +151,10 @@
 
       <!-- SPOTIFY -->
       <div class="tab-panel" id="spotify">
-        <div class="game-panel" style="background-image:url('assets/img/spotify-art.jpg');">
+        <div class="game-panel" style="background-image:url('assets/img/spotify-art.webp');">
           <div class="game-intro">
             <div class="game-intro-row">
-              <img class="game-thumb" src="assets/img/spotify-art.jpg" alt="Spotify">
+              <img class="game-thumb" src="assets/img/spotify-art.webp" alt="Spotify" loading="lazy" decoding="async">
               <div>
                 <h2>🎧 Spotify Premium <span class="tb-tag" style="margin-left:6px;">Nouveau</span></h2>
                 <p>Musique en illimité, sans publicité, écoute hors ligne.</p>
@@ -160,10 +172,10 @@
 
       <!-- DISNEY+ -->
       <div class="tab-panel" id="disney">
-        <div class="game-panel" style="background-image:url('assets/img/disney-art.jpg');">
+        <div class="game-panel" style="background-image:url('assets/img/disney-art.webp');">
           <div class="game-intro">
             <div class="game-intro-row">
-              <img class="game-thumb" src="assets/img/disney-art.jpg" alt="Disney+">
+              <img class="game-thumb" src="assets/img/disney-art.webp" alt="Disney+" loading="lazy" decoding="async">
               <div>
                 <h2>🏰 Disney+ <span class="tb-tag" style="margin-left:6px;">Nouveau</span></h2>
                 <p>Disney, Pixar, Marvel, Star Wars et National Geographic en illimité.</p>
@@ -198,7 +210,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="logo"><img src="assets/img/apay-icon.png" alt="Apay Digital" class="logo-icon" width="36" height="36"><span class="logo-text"><span class="a1">Apay</span><span class="a2">Digital</span></span><span class="a3">CG</span></a>
-        <p>Codes & abonnements gaming instantanés à Pointe-Noire. Paiement Mobile Money & Airtel Money, livraison sur WhatsApp.</p>
+        <p>Codes & abonnements gaming instantanés à Pointe-Noire. Paiement Mobile Money & Airtel Money automatique, livraison sur WhatsApp ou email.</p>
       </div>
       <div>
         <h4>Catalogues</h4>

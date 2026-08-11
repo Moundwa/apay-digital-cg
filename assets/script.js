@@ -5,21 +5,21 @@ const WA_NUMBER = "242069678759";
 // tab system below AND by APION (assets/apion-*.js), so a product only
 // ever needs to be described in one place.
 const GAME_META = {
-  freefire: { name: "Free Fire",              icon: "🔥",  img: "assets/img/freefire-art.jpg", glow: "rgba(255,106,57,0.35)",  a: "#FF6A39", b: "#5FA3FF", cat: "mobile" },
-  pubgm:    { name: "PUBG Mobile",             icon: "🎯",  img: "assets/img/pubgm-art.jpg",    glow: "rgba(155,178,140,0.35)", a: "#9BAE7A", b: "#5FA3FF", cat: "mobile" },
-  mlbb:     { name: "Mobile Legends",          icon: "⚔️", img: "assets/img/mlbb-art.jpg",     glow: "rgba(139,107,255,0.35)", a: "#8B6BFF", b: "#5FA3FF", cat: "mobile" },
-  genshin:  { name: "Genshin Impact",          icon: "💎",  img: "assets/img/genshin-art.jpg",  glow: "rgba(242,201,76,0.35)",  a: "#F2C94C", b: "#6FD8FF", cat: "mobile" },
-  bleach:   { name: "Bleach: Soul Resonance",  icon: "🗡️", img: "assets/img/bleach-art.jpg",   glow: "rgba(229,72,77,0.35)",   a: "#E5484D", b: "#5FA3FF", cat: "mobile" },
-  playstation: { name: "PlayStation",          icon: "🎮",  img: "assets/img/playstation-art.jpg", glow: "rgba(0,112,209,0.35)", a: "#0070D1", b: "#5FA3FF", cat: "giftcards" },
-  xbox:        { name: "Xbox",                 icon: "🟢",  img: "assets/img/xbox-art.jpg",        glow: "rgba(16,124,16,0.35)", a: "#107C10", b: "#5FA3FF", cat: "giftcards" },
-  netflix:     { name: "Netflix",               icon: "📺", img: "assets/img/netflix-art.jpg",     glow: "rgba(229,9,20,0.35)",  a: "#E50914", b: "#5FA3FF", cat: "streaming" },
+  freefire: { name: "Free Fire",              icon: "🔥",  img: "assets/img/freefire-art.webp", glow: "rgba(255,106,57,0.35)",  a: "#FF6A39", b: "#5FA3FF", cat: "mobile" },
+  pubgm:    { name: "PUBG Mobile",             icon: "🎯",  img: "assets/img/pubgm-art.webp",    glow: "rgba(155,178,140,0.35)", a: "#9BAE7A", b: "#5FA3FF", cat: "mobile" },
+  mlbb:     { name: "Mobile Legends",          icon: "⚔️", img: "assets/img/mlbb-art.webp",     glow: "rgba(139,107,255,0.35)", a: "#8B6BFF", b: "#5FA3FF", cat: "mobile" },
+  genshin:  { name: "Genshin Impact",          icon: "💎",  img: "assets/img/genshin-art.webp",  glow: "rgba(242,201,76,0.35)",  a: "#F2C94C", b: "#6FD8FF", cat: "mobile" },
+  bleach:   { name: "Bleach: Soul Resonance",  icon: "🗡️", img: "assets/img/bleach-art.webp",   glow: "rgba(229,72,77,0.35)",   a: "#E5484D", b: "#5FA3FF", cat: "mobile" },
+  playstation: { name: "PlayStation",          icon: "🎮",  img: "assets/img/playstation-art.webp", glow: "rgba(0,112,209,0.35)", a: "#0070D1", b: "#5FA3FF", cat: "giftcards" },
+  xbox:        { name: "Xbox",                 icon: "🟢",  img: "assets/img/xbox-art.webp",        glow: "rgba(16,124,16,0.35)", a: "#107C10", b: "#5FA3FF", cat: "giftcards" },
+  netflix:     { name: "Netflix",               icon: "📺", img: "assets/img/netflix-art.webp",     glow: "rgba(229,9,20,0.35)",  a: "#E50914", b: "#5FA3FF", cat: "streaming" },
   // ---- Nouveaux (2026-07-02) — visuels provisoires (SVG), à remplacer par les vrais artworks ----
-  nintendo: { name: "Nintendo eShop",  icon: "🍄",  img: "assets/img/nintendo-art.jpg", glow: "rgba(230,0,18,0.35)",   a: "#E60012", b: "#5FA3FF", cat: "giftcards" },
-  steam:    { name: "Steam",           icon: "🕹️", img: "assets/img/steam-art.jpg",    glow: "rgba(102,192,244,0.35)", a: "#66C0F4", b: "#5FA3FF", cat: "giftcards" },
-  spotify:  { name: "Spotify Premium", icon: "🎧",  img: "assets/img/spotify-art.jpg",  glow: "rgba(29,185,84,0.35)",  a: "#1DB954", b: "#5FA3FF", cat: "streaming" },
-  disney:   { name: "Disney+",         icon: "🏰",  img: "assets/img/disney-art.jpg",   glow: "rgba(61,142,247,0.35)", a: "#3D8EF7", b: "#5FA3FF", cat: "streaming" },
-  office:   { name: "Microsoft Office",icon: "📄",  img: "assets/img/office-art.jpg",   glow: "rgba(234,62,35,0.35)",  a: "#EA3E23", b: "#5FA3FF", cat: "software" },
-  adobe:    { name: "Adobe Creative Cloud", icon: "🎨", img: "assets/img/adobe-art.jpg", glow: "rgba(255,51,102,0.35)", a: "#FF3366", b: "#5FA3FF", cat: "software" }
+  nintendo: { name: "Nintendo eShop",  icon: "🍄",  img: "assets/img/nintendo-art.webp", glow: "rgba(230,0,18,0.35)",   a: "#E60012", b: "#5FA3FF", cat: "giftcards" },
+  steam:    { name: "Steam",           icon: "🕹️", img: "assets/img/steam-art.webp",    glow: "rgba(102,192,244,0.35)", a: "#66C0F4", b: "#5FA3FF", cat: "giftcards" },
+  spotify:  { name: "Spotify Premium", icon: "🎧",  img: "assets/img/spotify-art.webp",  glow: "rgba(29,185,84,0.35)",  a: "#1DB954", b: "#5FA3FF", cat: "streaming" },
+  disney:   { name: "Disney+",         icon: "🏰",  img: "assets/img/disney-art.webp",   glow: "rgba(61,142,247,0.35)", a: "#3D8EF7", b: "#5FA3FF", cat: "streaming" },
+  office:   { name: "Microsoft Office",icon: "📄",  img: "assets/img/office-art.webp",   glow: "rgba(234,62,35,0.35)",  a: "#EA3E23", b: "#5FA3FF", cat: "software" },
+  adobe:    { name: "Adobe Creative Cloud", icon: "🎨", img: "assets/img/adobe-art.webp", glow: "rgba(255,51,102,0.35)", a: "#FF3366", b: "#5FA3FF", cat: "software" }
 };
 window.APAY_GAME_META = GAME_META;
 

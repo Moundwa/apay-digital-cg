@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cartes Cadeau — PSN, Xbox, Nintendo & Steam | Apay Digital CG</title>
-<meta name="description" content="Cartes cadeau PSN Wallet, Xbox Live, Nintendo eShop et Steam. Livraison code en 5 à 10 min via WhatsApp, paiement Mobile Money.">
+<meta name="description" content="Cartes cadeau PSN Wallet, Xbox Live, Nintendo eShop et Steam. Paiement Mobile Money automatique, code livré en 5 à 10 min.">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#121019">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon-192.png">
 <link rel="canonical" href="https://www.apay-digital-cg.store/cartes-cadeaux.html">
 <meta property="og:type" content="website">
@@ -16,17 +18,27 @@
 <meta property="og:locale" content="fr_FR">
 <meta property="og:url" content="https://www.apay-digital-cg.store/cartes-cadeaux.html">
 <meta property="og:title" content="Cartes Cadeau — PSN, Xbox, Nintendo & Steam">
-<meta property="og:description" content="Cartes cadeau PSN Wallet, Xbox Live, Nintendo eShop et Steam. Livraison code en 5 à 10 min via WhatsApp, paiement Mobile Money.">
+<meta property="og:description" content="Cartes cadeau PSN Wallet, Xbox Live, Nintendo eShop et Steam. Paiement Mobile Money automatique, code livré en 5 à 10 min.">
 <meta property="og:image" content="https://www.apay-digital-cg.store/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cartes Cadeau — PSN, Xbox, Nintendo & Steam">
-<meta name="twitter:description" content="Cartes cadeau PSN Wallet, Xbox Live, Nintendo eShop et Steam. Livraison code en 5 à 10 min via WhatsApp, paiement Mobile Money.">
+<meta name="twitter:description" content="Cartes cadeau PSN Wallet, Xbox Live, Nintendo eShop et Steam. Paiement Mobile Money automatique, code livré en 5 à 10 min.">
 <meta name="twitter:image" content="https://www.apay-digital-cg.store/assets/img/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.apay-digital-cg.store/"},
+    {"@type": "ListItem", "position": 2, "name": "Cartes Cadeau", "item": "https://www.apay-digital-cg.store/cartes-cadeaux.html"}
+  ]
+}
+</script>
 </head>
 <body data-apion-page="giftcards">
 
@@ -73,7 +85,7 @@
       </ul>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-primary btn-sm" href="https://wa.me/242069678759?text=Salut%20Apay%20Digital%20CG!%20Je%20veux%20commander%20un%20code%20ou%20une%20recharge." target="_blank" rel="noopener">Commander</a>
+      <a class="btn btn-primary btn-sm" href="#produits">Commander</a>
       <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
     </div>
   </div>
@@ -89,12 +101,12 @@
       <div>
         <span class="eyebrow">🎁 Cartes Cadeau — PlayStation, Xbox, Nintendo & Steam</span>
         <h1 style="font-size:clamp(1.8rem,3.4vw,2.6rem);">Quatre plateformes, <span class="accent">un seul stock.</span></h1>
-        <p class="lead">Cartes PSN Wallet, crédit Xbox Live, cartes Nintendo eShop et portefeuille Steam pour jeux, DLC et abonnements. Code envoyé sur WhatsApp en 5 à 10 minutes.</p>
+        <p class="lead">Cartes PSN Wallet, crédit Xbox Live, cartes Nintendo eShop et portefeuille Steam pour jeux, DLC et abonnements. Paiement Mobile Money direct sur le site, code envoyé en 5 à 10 minutes.</p>
       </div>
       <div class="hero-game-visual">
         <div class="hgv-glow" id="hgvGlow"></div>
         <div class="hgv-card">
-          <img id="hgvImg" src="assets/img/playstation-art.jpg" alt="PlayStation">
+          <img id="hgvImg" src="assets/img/playstation-art.webp" alt="PlayStation">
         </div>
         <div class="hgv-chip" id="hgvChip">
           <span class="hgv-chip-icon">🎮</span>
@@ -107,7 +119,7 @@
     </div>
   </section>
 
-  <section class="section tight">
+  <section class="section tight" id="produits">
     <div class="wrap">
 
       <div class="tab-bar">
@@ -119,10 +131,10 @@
 
       <!-- PLAYSTATION -->
       <div class="tab-panel active" id="playstation">
-        <div class="game-panel" style="background-image:url('assets/img/playstation-art.jpg');">
+        <div class="game-panel" style="background-image:url('assets/img/playstation-art.webp');">
           <div class="game-intro">
             <div class="game-intro-row">
-              <img class="game-thumb" src="assets/img/playstation-art.jpg" alt="PlayStation">
+              <img class="game-thumb" src="assets/img/playstation-art.webp" alt="PlayStation" loading="lazy" decoding="async">
               <div>
                 <h2>🎮 PlayStation Network</h2>
                 <p>Recharge ton portefeuille PSN pour acheter jeux, DLC, abonnements PS Plus et plus.</p>
@@ -142,10 +154,10 @@
 
       <!-- XBOX -->
       <div class="tab-panel" id="xbox">
-        <div class="game-panel" style="background-image:url('assets/img/xbox-art.jpg');">
+        <div class="game-panel" style="background-image:url('assets/img/xbox-art.webp');">
           <div class="game-intro">
             <div class="game-intro-row">
-              <img class="game-thumb" src="assets/img/xbox-art.jpg" alt="Xbox">
+              <img class="game-thumb" src="assets/img/xbox-art.webp" alt="Xbox" loading="lazy" decoding="async">
               <div>
                 <h2>🟢 Xbox Live</h2>
                 <p>Recharge ton compte Xbox pour Game Pass, jeux et contenus.</p>
@@ -165,10 +177,10 @@
 
       <!-- NINTENDO -->
       <div class="tab-panel" id="nintendo">
-        <div class="game-panel" style="background-image:url('assets/img/nintendo-art.jpg');">
+        <div class="game-panel" style="background-image:url('assets/img/nintendo-art.webp');">
           <div class="game-intro">
             <div class="game-intro-row">
-              <img class="game-thumb" src="assets/img/nintendo-art.jpg" alt="Nintendo eShop">
+              <img class="game-thumb" src="assets/img/nintendo-art.webp" alt="Nintendo eShop" loading="lazy" decoding="async">
               <div>
                 <h2>🍄 Nintendo eShop <span class="tb-tag" style="margin-left:6px;">Nouveau</span></h2>
                 <p>Cartes eShop pour jeux Switch, DLC et abonnements Nintendo Switch Online.</p>
@@ -188,10 +200,10 @@
 
       <!-- STEAM -->
       <div class="tab-panel" id="steam">
-        <div class="game-panel" style="background-image:url('assets/img/steam-art.jpg');">
+        <div class="game-panel" style="background-image:url('assets/img/steam-art.webp');">
           <div class="game-intro">
             <div class="game-intro-row">
-              <img class="game-thumb" src="assets/img/steam-art.jpg" alt="Steam">
+              <img class="game-thumb" src="assets/img/steam-art.webp" alt="Steam" loading="lazy" decoding="async">
               <div>
                 <h2>🕹️ Steam <span class="tb-tag" style="margin-left:6px;">Nouveau</span></h2>
                 <p>Portefeuille Steam pour jeux, DLC et objets sur la plateforme PC.</p>
@@ -228,7 +240,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="logo"><img src="assets/img/apay-icon.png" alt="Apay Digital" class="logo-icon" width="36" height="36"><span class="logo-text"><span class="a1">Apay</span><span class="a2">Digital</span></span><span class="a3">CG</span></a>
-        <p>Codes & abonnements gaming instantanés à Pointe-Noire. Paiement Mobile Money & Airtel Money, livraison sur WhatsApp.</p>
+        <p>Codes & abonnements gaming instantanés à Pointe-Noire. Paiement Mobile Money & Airtel Money automatique, livraison sur WhatsApp ou email.</p>
       </div>
       <div>
         <h4>Catalogues</h4>
