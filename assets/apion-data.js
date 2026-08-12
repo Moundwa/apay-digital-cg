@@ -177,6 +177,14 @@ const ApionData = (() => {
         { label: "Adobe CC 3 Mois", price: 20000 },
         { label: "Adobe CC 12 Mois", price: 65000 }
       ]
+    },
+    telegram: {
+      name: "Vérification de compte Telegram", icon: "✈️", category: "services",
+      currency: "Service", page: "services.html", anchor: "#telegram",
+      delivery: "quelques minutes",
+      tickets: [
+        { label: "Vérification compte Telegram", price: 1000 }
+      ]
     }
   };
 
@@ -192,9 +200,7 @@ const ApionData = (() => {
 
   const PAYMENT_METHODS = [
     { key: "mtn",    name: "MTN Mobile Money" },
-    { key: "airtel", name: "Airtel Money" },
-    { key: "carte",  name: "Carte bancaire" },
-    { key: "paypal", name: "PayPal" }
+    { key: "airtel", name: "Airtel Money" }
   ];
 
   // ---- Synonymes / alias -> clé canonique du catalogue ou de KNOWN_NOT_LISTED ----
@@ -228,7 +234,10 @@ const ApionData = (() => {
     "office": "office", "microsoft office": "office", "word": "office", "excel": "office",
     "antivirus": "antivirus",
     "adobe": "adobe", "photoshop": "adobe", "illustrator": "adobe",
-    "canva": "canva"
+    "canva": "canva",
+    // Telegram
+    "telegram": "telegram", "tg": "telegram", "compte telegram": "telegram",
+    "verification telegram": "telegram", "verifier telegram": "telegram"
   };
 
   const QUANTITY_WORDS = {
@@ -241,7 +250,7 @@ const ApionData = (() => {
 
   const COPY = {
     greeting:
-      "👋 Bonjour et bienvenue sur Apay.\nJe suis APION, le Gardien Numérique d'Apay.\nJe peux vous aider à trouver un produit, répondre à vos questions ou vous guider jusqu'à votre commande.\nQue recherchez-vous aujourd'hui ?",
+      "👋 Bonjour et bienvenue sur Apay.\nJe suis APION, le Gardien Numérique d'Apay.\nJe peux vous aider à trouver un produit et vous accompagner jusqu'au paiement, directement sur le site.\nQue recherchez-vous aujourd'hui ?",
     quickActionsIntro: "Vous pouvez aussi choisir directement :",
     thinkingLabel: "APION réfléchit…"
   };

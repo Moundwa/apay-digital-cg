@@ -87,7 +87,8 @@ const ApionBrain = (() => {
     category_mobile: /\b(recharger un jeu|jeu mobile|jeux mobile|recharge jeu)\b/,
     category_giftcard: /\b(console|consoles|carte cadeau|cartes cadeau|cartes cadeaux|gift card)\b/,
     category_software: /\b(acheter un logiciel|logiciel|logiciels)\b/,
-    category_streaming: /\b(streaming|abonnement)\b/
+    category_streaming: /\b(streaming|abonnement)\b/,
+    category_services: /\b(service|services|verification|verifier un compte)\b/
   };
 
   function findBestTicket(item, targetAmount){
@@ -104,6 +105,20 @@ const ApionBrain = (() => {
     memory.category = item.category;
     memory.itemRef = item;
 
+    // un seul palier possible (ex: service à prix fixe) -> pas besoin de demander un montant
+    if (item.tickets.length === 1) {
+      const ticket = item.tickets[0];
+      memory.chosenTicket = ticket;
+      saveMemory(memory);
+      return {
+        emoji: item.icon,
+        text: `${item.name} — ${ApionData.formatPrice(ticket.price)}. On valide ?`,
+        ticket: { name: `${item.name}`, price: ApionData.formatPrice(ticket.price), raw: ticket, category: item.category },
+        quickReplies: ["Je valide cette commande"],
+        page: item.page, anchor: item.anchor
+      };
+    }
+
     if (amount) {
       const ticket = findBestTicket(item, amount);
       memory.chosenTicket = ticket;
@@ -111,7 +126,7 @@ const ApionBrain = (() => {
       return {
         emoji: item.icon,
         text: `Très bien, pour ${ApionData.formatPrice(amount)} sur ${item.name}, voici ce qui s'en rapproche le plus :`,
-        ticket: { name: `${item.name} — ${ticket.label}`, price: ApionData.formatPrice(ticket.price), raw: ticket },
+        ticket: { name: `${item.name} — ${ticket.label}`, price: ApionData.formatPrice(ticket.price), raw: ticket, category: item.category },
         quickReplies: ["Je valide cette commande", "Voir tous les montants", "Autre montant"],
         page: item.page, anchor: item.anchor
       };
@@ -151,7 +166,7 @@ const ApionBrain = (() => {
     const methods = ApionData.getPaymentMethods().map(m => `• ${m.name}`).join("\n");
     return {
       emoji: "💳",
-      text: `Nous acceptons :\n${methods}\n\nLe paiement se confirme directement avec l'agent sur WhatsApp au moment de la commande.`,
+      text: `Nous acceptons :\n${methods}\n\nLe paiement se fait directement sur le site : vous cliquez sur "Commander", vous confirmez sur votre téléphone, et c'est validé — pas de carte bancaire ni PayPal pour le moment.`,
       quickReplies: ["🎮 Recharger un jeu", "💬 Contacter WhatsApp"]
     };
   }
@@ -159,7 +174,7 @@ const ApionBrain = (() => {
   function replyDelivery(){
     return {
       emoji: "⚡",
-      text: "La livraison est instantanée dans la grande majorité des cas : entre 5 et 10 minutes selon le produit, directement sur WhatsApp après confirmation du paiement.",
+      text: "La livraison est instantanée dans la grande majorité des cas : entre 5 et 10 minutes après confirmation automatique de votre paiement Mobile Money, envoyée sur WhatsApp ou par email selon ce que vous indiquez à la commande.",
       quickReplies: ["🎮 Recharger un jeu", "💬 Contacter WhatsApp"]
     };
   }
@@ -176,8 +191,8 @@ const ApionBrain = (() => {
   function replyHelp(){
     return {
       emoji: "🤖",
-      text: "Je suis APION, le Gardien Numérique d'Apay. Je connais tout notre catalogue (jeux, consoles, streaming), je me souviens de ce dont on parle, et je peux vous accompagner jusqu'à votre commande sur WhatsApp.",
-      quickReplies: ["🎮 Recharger un jeu", "💻 Acheter un logiciel", "🎬 Streaming", "🎁 Carte cadeau", "💬 Contacter WhatsApp"]
+      text: "Je suis APION, le Gardien Numérique d'Apay. Je connais tout notre catalogue (jeux, consoles, streaming, services), je me souviens de ce dont on parle, et je peux vous accompagner jusqu'au paiement, directement sur le site.",
+      quickReplies: ["🎮 Recharger un jeu", "💻 Acheter un logiciel", "🎬 Streaming", "🎁 Carte cadeau", "✈️ Services"]
     };
   }
 
@@ -185,7 +200,7 @@ const ApionBrain = (() => {
     return {
       emoji: "👋",
       text: ApionData.getCopy().greeting,
-      quickReplies: ["🎮 Recharger un jeu", "💻 Acheter un logiciel", "🎬 Streaming", "🎁 Carte cadeau", "💬 Contacter WhatsApp"]
+      quickReplies: ["🎮 Recharger un jeu", "💻 Acheter un logiciel", "🎬 Streaming", "🎁 Carte cadeau", "✈️ Services"]
     };
   }
 
@@ -225,6 +240,13 @@ const ApionBrain = (() => {
       quickReplies: ["📄 Microsoft Office", "🎨 Adobe Creative Cloud"]
     };
   }
+  function replyCategoryServices(){
+    return {
+      emoji: "✈️",
+      text: "Voici nos services disponibles :",
+      quickReplies: ["✈️ Vérification Telegram"]
+    };
+  }
 
   const MOBILE_TAX_RATE = 0.035; // taxe appliquée uniquement aux jeux mobile, comme sur les boutons "Commander" de la page
 
@@ -237,42 +259,27 @@ const ApionBrain = (() => {
       };
     }
     const isMobile = memory.itemRef.category === "mobile";
-
-    // pour les jeux mobile, l'ID en jeu est obligatoire avant de finaliser
-    if (isMobile && !memory.gameId) {
-      memory.awaitingGameId = true;
-      saveMemory(memory);
-      return {
-        emoji: "🎮",
-        text: "Avant de valider, quel est votre ID en jeu (Player ID) ? Précisez aussi le serveur si votre jeu en a un.",
-        quickReplies: []
-      };
-    }
-
     const qty = memory.pendingQty || 1;
     const subtotal = memory.chosenTicket.price * qty;
     const tax = isMobile ? Math.round(subtotal * MOBILE_TAX_RATE) : 0;
     const total = subtotal + tax;
-    const label = `${memory.itemRef.name} ${memory.chosenTicket.label}${qty > 1 ? " x" + qty : ""}`;
+    const singleTicket = memory.itemRef.tickets.length === 1;
+    const label = singleTicket
+      ? `${memory.itemRef.name}${qty > 1 ? " x" + qty : ""}`
+      : `${memory.itemRef.name} ${memory.chosenTicket.label}${qty > 1 ? " x" + qty : ""}`;
 
     let text = `Excellente nouvelle !\nVotre commande est prête : ${label}`;
     text += isMobile
-      ? ` pour ${ApionData.formatPrice(total)} TTC (taxe 3,5% incluse).\nID en jeu : ${memory.gameId}`
-      : ` pour ${ApionData.formatPrice(total)}.`;
-    text += "\nJe vous transmets sur WhatsApp pour finaliser le paiement.";
+      ? ` pour ${ApionData.formatPrice(total)} TTC (taxe 3,5% incluse).\nCliquez sur "Commander" ci-dessous : la page vous demandera votre ID en jeu et votre numéro Mobile Money pour payer directement.`
+      : ` pour ${ApionData.formatPrice(total)}.\nCliquez sur "Commander" ci-dessous pour payer directement en Mobile Money.`;
 
-    const orderLabel = isMobile ? `${label} — ID: ${memory.gameId}` : label;
-
-    // on repart à zéro sur l'attente d'ID pour une prochaine commande éventuelle
-    memory.awaitingGameId = false;
     saveMemory(memory);
 
     return {
       emoji: "🎉",
       text,
-      order: { label: orderLabel, price: ApionData.formatPrice(total) },
-      quickReplies: ["💬 Ouvrir WhatsApp"],
-      forceWhatsapp: true
+      ticket: { name: label, price: ApionData.formatPrice(total), category: memory.itemRef.category },
+      quickReplies: ["🎮 Recharger un jeu", "🎬 Streaming"]
     };
   }
 
@@ -291,20 +298,6 @@ const ApionBrain = (() => {
   // ---------------- Détection d'intention + génération de réponse ----------------
   function resolve(userText){
     const normText = normalize(userText);
-
-    // si on vient de demander l'ID en jeu, le message suivant EST la réponse
-    // (sauf si le client change d'avis et annule)
-    if (memory.awaitingGameId) {
-      if (/^(non|annul\w*|laisse tomber|pas maintenant)\b/.test(normText)) {
-        memory.awaitingGameId = false; memory.chosenTicket = null; memory.pendingQty = null;
-        saveMemory(memory);
-        return { emoji: "😕", text: "Aucun souci, commande annulée. Que recherchez-vous ?", quickReplies: ["🎮 Recharger un jeu", "🎬 Streaming"] };
-      }
-      memory.gameId = userText.trim();
-      memory.awaitingGameId = false;
-      saveMemory(memory);
-      return replyOrderConfirmed();
-    }
 
     // intentions courtes / mots-clés prioritaires
     for (const [intent, pattern] of Object.entries(INTENT_PATTERNS)) {
@@ -328,6 +321,7 @@ const ApionBrain = (() => {
           case "category_giftcard": return replyCategoryGiftcards();
           case "category_software": return replyCategorySoftware();
           case "category_streaming": return replyCategoryStreaming();
+          case "category_services": return replyCategoryServices();
         }
       }
     }
@@ -341,7 +335,7 @@ const ApionBrain = (() => {
         return {
           emoji: memory.itemRef.icon,
           text: `Parfait : ${memory.itemRef.name} — ${exact.label} pour ${ApionData.formatPrice(exact.price)}. On valide ?`,
-          ticket: { name: `${memory.itemRef.name} — ${exact.label}`, price: ApionData.formatPrice(exact.price) },
+          ticket: { name: `${memory.itemRef.name} — ${exact.label}`, price: ApionData.formatPrice(exact.price), category: memory.itemRef.category },
           quickReplies: ["Je valide cette commande", "Voir tous les montants", "Autre montant"]
         };
       }

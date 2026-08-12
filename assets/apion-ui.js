@@ -82,7 +82,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <button type="button" class="ap-tc-buy">Commander</button>
       `;
       card.querySelector(".ap-tc-buy").addEventListener("click", () => {
-        if (typeof orderItem === "function") orderItem(response.ticket.name, response.ticket.price);
+        const isMobile = response.ticket.category === "mobile";
+        if (isMobile && typeof openOrderModal === "function") {
+          openOrderModal(response.ticket.name, response.ticket.price);
+        } else if (typeof orderItem === "function") {
+          orderItem(response.ticket.name, response.ticket.price);
+        }
       });
       bubbleWrap.appendChild(card);
     }
@@ -102,13 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollToBottom();
     renderQuickReplies(response.quickReplies || []);
 
-    if (response.forceWhatsapp || response.order) {
-      const label = response.order ? response.order.label : (ApionBrain.getMemory().product || "un produit Apay");
-      const price = response.order ? response.order.price : "";
+    if (response.forceWhatsapp) {
+      const label = ApionBrain.getMemory().product || "un produit Apay";
       setTimeout(() => {
-        const msg = price
-          ? `Salut Apay Digital CG ! Je veux commander : ${label} (${price}).`
-          : `Salut Apay Digital CG ! ${label !== "un produit Apay" ? "Je m'intéresse à : " + label + "." : "J'ai besoin d'aide pour commander."}`;
+        const msg = `Salut Apay Digital CG ! ${label !== "un produit Apay" ? "Je m'intéresse à : " + label + "." : "J'ai besoin d'aide."}`;
         window.open(waLink(msg), "_blank", "noopener");
       }, 500);
     }
