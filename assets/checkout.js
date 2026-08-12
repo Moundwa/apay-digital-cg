@@ -191,7 +191,7 @@
     els.serverField.style.display = requireGameId ? "" : "none";
     els.gameId.value = "";
     els.server.value = "";
-    els.phone.value = "";
+    els.phone.value = "242";
     els.contact.value = "";
     els.providerBtns.forEach((b) => b.classList.remove("active"));
     els.errorEl.classList.remove("show");
@@ -200,7 +200,11 @@
     renderBreakdown();
     showState("form");
     overlay.classList.add("open");
-    setTimeout(() => (requireGameId ? els.gameId : els.phone).focus(), 200);
+    setTimeout(() => {
+      const target = requireGameId ? els.gameId : els.phone;
+      target.focus();
+      if (target === els.phone) target.setSelectionRange(target.value.length, target.value.length);
+    }, 200);
   }
 
   function closeModal() {
