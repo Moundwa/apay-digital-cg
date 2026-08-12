@@ -19,7 +19,8 @@ const GAME_META = {
   spotify:  { name: "Spotify Premium", icon: "🎧",  img: "assets/img/spotify-art.webp",  glow: "rgba(29,185,84,0.35)",  a: "#1DB954", b: "#5FA3FF", cat: "streaming" },
   disney:   { name: "Disney+",         icon: "🏰",  img: "assets/img/disney-art.webp",   glow: "rgba(61,142,247,0.35)", a: "#3D8EF7", b: "#5FA3FF", cat: "streaming" },
   office:   { name: "Microsoft Office",icon: "📄",  img: "assets/img/office-art.webp",   glow: "rgba(234,62,35,0.35)",  a: "#EA3E23", b: "#5FA3FF", cat: "software" },
-  adobe:    { name: "Adobe Creative Cloud", icon: "🎨", img: "assets/img/adobe-art.webp", glow: "rgba(255,51,102,0.35)", a: "#FF3366", b: "#5FA3FF", cat: "software" }
+  adobe:    { name: "Adobe Creative Cloud", icon: "🎨", img: "assets/img/adobe-art.webp", glow: "rgba(255,51,102,0.35)", a: "#FF3366", b: "#5FA3FF", cat: "software" },
+  telegram: { name: "Telegram",             icon: "✈️", img: "assets/img/telegram-icon.webp", glow: "rgba(66,169,227,0.35)", a: "#42A9E3", b: "#5FA3FF", cat: "services" }
 };
 window.APAY_GAME_META = GAME_META;
 

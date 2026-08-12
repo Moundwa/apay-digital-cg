@@ -26,6 +26,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.apay-digital-cg.store/services.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.apay-digital-cg.store/mentions-legales.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
