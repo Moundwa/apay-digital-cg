@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const copy = window.ApionData ? ApionData.getCopy() : { greeting: "👋 Bonjour et bienvenue sur Apay." };
       addBotMessage({
         text: copy.greeting,
-        quickReplies: ["🎮 Recharger un jeu", "💻 Acheter un logiciel", "🎬 Streaming", "🎁 Carte cadeau", "💬 Contacter WhatsApp"]
+        quickReplies: ["🎮 Recharger un jeu", "💻 Acheter un logiciel", "🎬 Streaming", "🎁 Carte cadeau", "✈️ Services"]
       });
       sessionStorage.setItem("apion_greeted", "1");
       announceContextIfAny(600);
@@ -211,13 +211,13 @@ document.addEventListener("DOMContentLoaded", () => {
         addBotMessage({
           emoji: "🤖",
           text: `Content de vous revoir ! On avait parlé de ${mem.product}. On continue sur ça ?`,
-          quickReplies: ["Continuer", "🎮 Recharger un jeu", "🎬 Streaming"]
+          quickReplies: ["Continuer", "🎮 Recharger un jeu", "🎬 Streaming", "✈️ Services"]
         });
       } else {
         addBotMessage({
           emoji: "🤖",
           text: "Toujours là si besoin ! Que puis-je faire pour vous ?",
-          quickReplies: ["🎮 Recharger un jeu", "💻 Acheter un logiciel", "🎬 Streaming", "💬 Contacter WhatsApp"]
+          quickReplies: ["🎮 Recharger un jeu", "💻 Acheter un logiciel", "🎬 Streaming", "✈️ Services"]
         });
       }
       announceContextIfAny(600);
