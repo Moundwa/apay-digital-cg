@@ -644,9 +644,9 @@ body::after{
   background:var(--panel); border:1px solid var(--line); border-radius:20px;
   box-shadow:0 30px 70px rgba(0,0,0,0.55);
   display:flex; flex-direction:column; overflow:hidden;
-  opacity:0; visibility:hidden; transform:translateY(16px) scale(0.98);
+  opacity:0; visibility:hidden; transform:translateY(22px) scale(0.94);
   transform-origin:bottom right;
-  transition:opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  transition:opacity 0.3s cubic-bezier(0.22,1,0.36,1), transform 0.32s cubic-bezier(0.22,1,0.36,1), visibility 0.32s;
   pointer-events:none;
 }
 .apion-widget.ap-open .apion-panel{
@@ -790,19 +790,6 @@ body::after{
 /* thinking state: rings slow down, eyes pulse faster — while Apion "reflects" */
 .apion-float.thinking .af-avatar::before{ animation-duration:2.8s; }
 .apion-float.thinking .af-avatar::after{ animation-duration:0.85s; opacity:0.75; }
-
-.apion-panel{
-  position:fixed; z-index:210; right:22px; bottom:96px;
-  width:368px; max-width:calc(100vw - 32px);
-  height:520px; max-height:calc(100vh - 132px);
-  background:var(--panel); border:1px solid var(--line); border-radius:20px;
-  box-shadow:0 30px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(46,124,246,0.1);
-  display:flex; flex-direction:column; overflow:hidden;
-  opacity:0; visibility:hidden; transform:translateY(16px) scale(0.98);
-  transform-origin:bottom right;
-  transition:opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
-}
-.apion-panel.open{ opacity:1; visibility:visible; transform:translateY(0) scale(1); }
 
 .ap-head{
   display:flex; align-items:center; gap:10px;
