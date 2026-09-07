@@ -20,6 +20,8 @@
 <meta property="og:title" content="Jeux Mobile — Free Fire, PUBG, ML, Genshin Impact, Bleach">
 <meta property="og:description" content="Diamants Free Fire, UC PUBG Mobile, Diamants Mobile Legends, Cristaux Genèse Genshin Impact, Jade Spirituel Bleach: Soul Resonance. Paiement Mobile Money automatique, code livré en 5 min.">
 <meta property="og:image" content="https://www.apay-digital-cg.store/assets/img/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css?v=20260812b">
 <link rel="stylesheet" href="assets/apay-charte.css?v=20260907c">
 </head>
@@ -43,14 +45,15 @@
   </div>
 </header>
 <main>
+  <div class="wrap"><nav class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">/</span><span class="current">Jeux Mobile</span></nav></div>
   <section class="hero" style="padding:36px 0 30px;"><div class="wrap"><span class="eyebrow">Recharge jeu mobile</span><h1>Cinq jeux, <span class="accent">un seul stock.</span></h1></div></section>
   <section class="section tight" id="produits"><div class="wrap">
       <div class="tab-bar">
         <button class="tab-btn active" data-tab="freefire">Free Fire</button>
         <button class="tab-btn" data-tab="pubgm">PUBG Mobile</button>
         <button class="tab-btn" data-tab="mlbb">Mobile Legends</button>
-        <button class="tab-btn" data-tab="genshin">Genshin Impact <span class="tb-tag">Nouveau</span></button>
-        <button class="tab-btn" data-tab="bleach">Bleach: Soul Resonance <span class="tb-tag">Nouveau</span></button>
+        <button class="tab-btn" data-tab="genshin">Genshin Impact</button>
+        <button class="tab-btn" data-tab="bleach">Bleach: Soul Resonance</button>
       </div>
       <div class="tab-panel active" id="freefire"><div class="game-panel" style="background-image:url('assets/img/freefire-art.webp');"><div class="game-intro"><h2>Free Fire</h2><span class="gi-currency">Monnaie : Diamants</span></div><div class="ticket-grid">
         <div class="ticket"><span class="t-stub">FF-100</span><div class="t-body"><p class="t-amount">100 Diamants</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">1 200 FCFA</span><button class="t-buy" onclick="openOrderModal('Free Fire 100 Diamants','1 200 FCFA')">Commander</button></div></div>
@@ -75,7 +78,7 @@
         <div class="ticket"><span class="t-stub">MLBB-716</span><div class="t-body"><p class="t-amount">716 Diamants</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">9 225 FCFA</span><button class="t-buy" onclick="openOrderModal('Mobile Legends 716 Diamants','9 225 FCFA')">Commander</button></div></div>
         <div class="ticket"><span class="t-stub">MLBB-1164</span><div class="t-body"><p class="t-amount">1164 Diamants</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">12 875 FCFA</span><button class="t-buy" onclick="openOrderModal('Mobile Legends 1164 Diamants','12 875 FCFA')">Commander</button></div></div>
       </div></div></div>
-      <div class="tab-panel" id="genshin"><div class="game-panel" style="background-image:url('assets/img/genshin-art.webp');"><div class="game-intro"><h2>Genshin Impact <span class="tb-tag">Nouveau</span></h2><span class="gi-currency">Monnaie : Cristaux Genèse</span></div><div class="ticket-grid">
+      <div class="tab-panel" id="genshin"><div class="game-panel" style="background-image:url('assets/img/genshin-art.webp');"><div class="game-intro"><h2>Genshin Impact</h2><span class="gi-currency">Monnaie : Cristaux Genèse</span></div><div class="ticket-grid">
         <div class="ticket"><span class="t-stub">GI-060</span><div class="t-body"><p class="t-amount">60 Cristaux Genèse</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">800 FCFA</span><button class="t-buy" onclick="openOrderModal('Genshin Impact 60 Cristaux Genèse','800 FCFA')">Commander</button></div></div>
         <div class="ticket"><span class="t-stub">GI-330</span><div class="t-body"><p class="t-amount">330 Cristaux Genèse</p><p class="t-bonus">300 + 30 bonus</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">3 200 FCFA</span><button class="t-buy" onclick="openOrderModal('Genshin Impact 330 Cristaux Genèse','3 200 FCFA')">Commander</button></div></div>
         <div class="ticket"><span class="t-stub">GI-1090</span><div class="t-body"><p class="t-amount">1 090 Cristaux Genèse</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">9 700 FCFA</span><button class="t-buy" onclick="openOrderModal('Genshin Impact 1090 Cristaux Genèse','9 700 FCFA')">Commander</button></div></div>
@@ -84,7 +87,7 @@
         <div class="ticket"><span class="t-stub">GI-8080</span><div class="t-body"><p class="t-amount">8 080 Cristaux Genèse</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">65 000 FCFA</span><button class="t-buy" onclick="openOrderModal('Genshin Impact 8080 Cristaux Genèse','65 000 FCFA')">Commander</button></div></div>
         <div class="ticket"><span class="t-stub">GI-WLK</span><div class="t-body"><p class="t-amount">Pass Bénédiction Lunaire</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">3 200 FCFA</span><button class="t-buy" onclick="openOrderModal('Genshin Impact Pass Bénédiction Lunaire','3 200 FCFA')">Commander</button></div></div>
       </div></div></div>
-      <div class="tab-panel" id="bleach"><div class="game-panel" style="background-image:url('assets/img/bleach-art.webp');"><div class="game-intro"><h2>Bleach: Soul Resonance <span class="tb-tag">Nouveau</span></h2><span class="gi-currency">Monnaie : Jade Spirituel</span></div><div class="ticket-grid">
+      <div class="tab-panel" id="bleach"><div class="game-panel" style="background-image:url('assets/img/bleach-art.webp');"><div class="game-intro"><h2>Bleach: Soul Resonance</h2><span class="gi-currency">Monnaie : Jade Spirituel</span></div><div class="ticket-grid">
         <div class="ticket"><span class="t-stub">BSR-060</span><div class="t-body"><p class="t-amount">60 Jade Spirituel</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">800 FCFA</span><button class="t-buy" onclick="openOrderModal('Bleach Soul Resonance 60 Jade Spirituel','800 FCFA')">Commander</button></div></div>
         <div class="ticket"><span class="t-stub">BSR-330</span><div class="t-body"><p class="t-amount">330 Jade Spirituel</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">3 200 FCFA</span><button class="t-buy" onclick="openOrderModal('Bleach Soul Resonance 330 Jade Spirituel','3 200 FCFA')">Commander</button></div></div>
         <div class="ticket"><span class="t-stub">BSR-1080</span><div class="t-body"><p class="t-amount">1 080 Jade Spirituel</p></div><div class="t-perf"></div><div class="t-foot"><span class="t-price">9 700 FCFA</span><button class="t-buy" onclick="openOrderModal('Bleach Soul Resonance 1080 Jade Spirituel','9 700 FCFA')">Commander</button></div></div>
@@ -96,7 +99,43 @@
       </div></div></div>
   </div></section>
 </main>
-<footer class="site-footer"><div class="wrap"><div class="footer-bottom"><span>© 2026 ApayDigitalCG — Pointe-Noire, Congo.</span></div></div></footer>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><img src="assets/img/apay-icon.png" alt="Apay Digital" class="logo-icon" width="36" height="36"><span class="logo-text"><span class="a1">Apay</span><span class="a2">Digital</span></span><span class="a3">CG</span></a>
+        <p>PLAY · DIGITAL · MORE · Pointe-Noire.</p>
+      </div>
+      <div>
+        <h4>Store</h4>
+        <ul>
+          <li><a href="cartes-cadeaux.html">Cartes Cadeau</a></li>
+          <li><a href="streaming.html">Streaming</a></li>
+          <li><a href="mobile-games.html">Jeux Mobile</a></li>
+          <li><a href="logiciels.html">Logiciels</a></li>
+          <li><a href="services.html">Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Univers</h4>
+        <ul>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="hub.html">Hub</a></li>
+          <li><a href="pass.html">Pass</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Aide</h4>
+        <ul>
+          <li><a href="https://wa.me/242069678759" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="cgv.html">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 ApayDigitalCG — Pointe-Noire, Congo.</span></div>
+  </div>
+</footer>
 <div class="apion-widget" id="apionWidget">
   <button type="button" class="apion-float" id="apionFloat" aria-label="Discuter avec Apion"><span class="af-avatar"><img src="assets/img/apion-icon.png" alt="Apion"></span></button>
   <div class="apion-panel" id="apionPanel" role="dialog" aria-hidden="true">
