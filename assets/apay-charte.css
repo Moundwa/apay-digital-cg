@@ -1,4 +1,4 @@
-/* Apay charte overlay — P3 Hub vivant.
+/* Apay charte overlay — P3.1 unité de surface.
    Loaded AFTER assets/style.css. Does not replace checkout or APION.
 */
 :root {
@@ -120,3 +120,9 @@
 .presence-bar strong { font-family: "Space Grotesk", Inter, sans-serif; }
 .presence-bar span { color: #8b97ab; }
 @media (max-width: 720px) { .presence-bar { border-radius: 16px; } }
+.legal-content { color: #e8eef7; }
+.legal-content h1, .legal-content h2 { font-family: "Space Grotesk", Inter, sans-serif; }
+.legal-content a { color: var(--apay-signal); }
+.legal-nav { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 22px; }
+.legal-nav a { color: #8b97ab; text-decoration: none; font-size: 0.92rem; }
+.legal-nav a.active { color: var(--apay-ember); }
