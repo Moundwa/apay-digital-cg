@@ -1,4 +1,4 @@
-/* Apay charte overlay — P3.1 unité de surface.
+/* Apay charte overlay — P3.1 + logo 1.0.
    Loaded AFTER assets/style.css. Does not replace checkout or APION.
 */
 :root {
@@ -60,6 +60,15 @@
   letter-spacing: 0.16em;
   color: var(--apay-signal);
   margin-top: 3px;
+}
+img.logo-icon {
+  box-sizing: border-box !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding-left: 36px !important;
+  overflow: hidden !important;
+  background: #05070d url("img/apay-icon.svg") center / contain no-repeat !important;
+  border-radius: 8px;
 }
 .ifc-band {
   display: grid;
