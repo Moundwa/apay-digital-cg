@@ -1,6 +1,5 @@
-/* Apay charte overlay — P2 univers.
+/* Apay charte overlay — P3 Hub vivant.
    Loaded AFTER assets/style.css. Does not replace checkout or APION.
-   Void #05070D · Signal #00B4FF · Ember #FF7A1A
 */
 :root {
   --apay-void: #05070d;
@@ -24,8 +23,7 @@
   border-color: transparent;
   box-shadow: 0 10px 24px rgba(255, 122, 26, 0.28);
   transition: background var(--apay-duration) var(--apay-ease),
-    box-shadow var(--apay-duration) var(--apay-ease),
-    transform var(--apay-duration) var(--apay-ease);
+    box-shadow var(--apay-duration) var(--apay-ease);
 }
 .btn-primary:hover,
 .t-buy:hover,
@@ -41,17 +39,7 @@
 }
 .hero h1 .accent,
 .accent { color: var(--apay-signal); }
-.hero-actions .btn-ghost,
 .btn-ghost { border-color: rgba(0, 180, 255, 0.35); }
-.cat-card,
-.ticket,
-.spotlight-card,
-.tab-btn {
-  transition: border-color var(--apay-duration) var(--apay-ease),
-    transform var(--apay-duration) var(--apay-ease),
-    box-shadow var(--apay-duration) var(--apay-ease),
-    background var(--apay-duration) var(--apay-ease);
-}
 .cat-card:hover,
 .ticket:hover,
 .mini-ticket:hover {
@@ -61,17 +49,9 @@
 .tab-btn.active {
   border-color: var(--apay-signal);
   color: var(--apay-mist);
-  box-shadow: 0 0 0 1px rgba(0, 180, 255, 0.25);
 }
-.cta-band .btn-primary {
-  background: var(--apay-ember);
-  color: #05070d;
-}
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
-}
+.cta-band .btn-primary { background: var(--apay-ember); color: #05070d; }
+.logo-text { display: flex; flex-direction: column; line-height: 1.05; }
 .logo-text::after {
   content: "PLAY \00b7 DIGITAL \00b7 MORE";
   font-family: "Space Grotesk", Inter, sans-serif;
@@ -100,66 +80,43 @@
   text-transform: uppercase;
   color: var(--apay-ember);
 }
-.ifc-band strong {
-  grid-column: 1;
-  font-family: "Space Grotesk", Inter, sans-serif;
-  font-size: 1.25rem;
-}
+.ifc-band strong { grid-column: 1; font-family: "Space Grotesk", Inter, sans-serif; font-size: 1.25rem; }
 .ifc-meta { grid-column: 1; color: #8b97ab; font-size: 0.9rem; }
 .ifc-cta {
-  grid-column: 2;
-  grid-row: 1 / span 3;
-  align-self: center;
-  background: var(--apay-ember);
-  color: #05070d;
-  font-weight: 700;
-  font-size: 0.88rem;
-  padding: 0.75rem 1.15rem;
-  border-radius: 999px;
-  white-space: nowrap;
+  grid-column: 2; grid-row: 1 / span 3; align-self: center;
+  background: var(--apay-ember); color: #05070d; font-weight: 700;
+  font-size: 0.88rem; padding: 0.75rem 1.15rem; border-radius: 999px; white-space: nowrap;
 }
 @media (max-width: 720px) {
   .ifc-band { grid-template-columns: 1fr; }
   .ifc-cta { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 8px; }
 }
-.apay-room,
-.pass-tier {
-  background: #10182a;
-  border: 1px solid #1c2740;
-  border-radius: 16px;
-  padding: 1.5rem;
-  color: inherit;
-  text-decoration: none;
-  display: block;
-  transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+.apay-room, .pass-tier {
+  background: #10182a; border: 1px solid #1c2740; border-radius: 16px;
+  padding: 1.5rem; color: inherit; text-decoration: none; display: block;
 }
-.apay-room:hover,
-.pass-tier:hover { border-color: #00b4ff; transform: translateY(-3px); }
-.apay-room.is-soon { opacity: 0.92; }
+.apay-room:hover, .pass-tier:hover { border-color: #00b4ff; transform: translateY(-3px); }
 .room-kicker {
-  display: inline-block;
-  font-family: "Space Grotesk", Inter, sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #ff7a1a;
-  margin-bottom: 10px;
+  display: inline-block; font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #ff7a1a; margin-bottom: 10px;
 }
-.apay-room h3,
-.pass-tier h3 { margin: 0 0 8px; font-family: "Space Grotesk", Inter, sans-serif; }
-.apay-room p,
-.pass-tier p { margin: 0; color: #8b97ab; }
+.apay-room h3, .pass-tier h3 { margin: 0 0 8px; font-family: "Space Grotesk", Inter, sans-serif; }
+.apay-room p, .pass-tier p { margin: 0; color: #8b97ab; }
 .faq-list { display: grid; gap: 12px; }
-.faq-item {
-  border: 1px solid #1c2740;
-  border-radius: 16px;
-  background: #10182a;
-  padding: 16px 18px;
-}
-.faq-item h3 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-  font-family: "Space Grotesk", Inter, sans-serif;
-}
+.faq-item { border: 1px solid #1c2740; border-radius: 16px; background: #10182a; padding: 16px 18px; }
+.faq-item h3 { margin: 0 0 8px; font-size: 1rem; font-family: "Space Grotesk", Inter, sans-serif; }
 .faq-item p { margin: 0; color: #8b97ab; }
+.presence-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+  padding: 14px 18px; border: 1px solid rgba(0, 180, 255, 0.28);
+  border-radius: 999px; background: rgba(0, 180, 255, 0.06);
+  color: #e8eef7; font-size: 0.92rem;
+}
+.presence-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #00b4ff;
+  box-shadow: 0 0 0 4px rgba(0, 180, 255, 0.2);
+}
+.presence-bar strong { font-family: "Space Grotesk", Inter, sans-serif; }
+.presence-bar span { color: #8b97ab; }
+@media (max-width: 720px) { .presence-bar { border-radius: 16px; } }
