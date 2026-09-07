@@ -62,13 +62,10 @@
   margin-top: 3px;
 }
 img.logo-icon {
-  box-sizing: border-box !important;
-  width: 36px !important;
-  height: 36px !important;
-  padding-left: 36px !important;
-  overflow: hidden !important;
-  background: #05070d url("img/apay-icon.svg") center / contain no-repeat !important;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
+  background: #05070d;
 }
 .ifc-band {
   display: grid;
