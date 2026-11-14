@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Commandes | Apay Admin</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#05070d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=20261114b">
+<link rel="stylesheet" href="assets/admin.css?v=20261114">
+</head>
+<body class="admin">
+<header class="adm-top">
+  <a href="index.html" class="logo"><img src="assets/img/apay-icon.svg" alt="Apay Digital" class="logo-icon" width="32" height="32"><span class="logo-text"><span class="a1">Apay</span><span class="a2">Admin</span></span></a>
+  <div class="adm-top-actions">
+    <span id="admUpdated" class="adm-updated"></span>
+    <button type="button" id="admRefresh" class="adm-btn" hidden>Actualiser</button>
+    <button type="button" id="admLogout" class="adm-btn ghost" hidden>Se déconnecter</button>
+  </div>
+</header>
+
+<main class="adm-wrap">
+  <!-- Connexion -->
+  <section id="admLogin" class="adm-login">
+    <h1>Tableau de bord des commandes</h1>
+    <p>Entre ton code administrateur (variable <code>ADMIN_TOKEN</code> dans Vercel). Il reste mémorisé sur cet appareil seulement.</p>
+    <form id="admLoginForm" autocomplete="off">
+      <input type="password" id="admToken" class="adm-input" placeholder="Code administrateur" autocomplete="current-password" required>
+      <button type="submit" class="btn btn-primary">Entrer</button>
+    </form>
+    <p id="admLoginError" class="adm-error" hidden></p>
+  </section>
+
+  <!-- Tableau de bord -->
+  <section id="admBoard" hidden>
+    <div class="adm-stats">
+      <div class="adm-stat todo"><span class="n" id="statTodo">0</span><span class="l">À livrer</span></div>
+      <div class="adm-stat"><span class="n" id="statToday">0 FCFA</span><span class="l">Encaissé aujourd'hui</span></div>
+      <div class="adm-stat"><span class="n" id="statPending">0</span><span class="l">Paiements en attente</span></div>
+      <div class="adm-stat"><span class="n" id="statTotal">0 FCFA</span><span class="l">Encaissé (liste)</span></div>
+    </div>
+
+    <div class="adm-toolbar">
+      <div class="adm-filters" role="tablist">
+        <button type="button" class="adm-filter active" data-filter="todo">À livrer</button>
+        <button type="button" class="adm-filter" data-filter="delivered">Livrées</button>
+        <button type="button" class="adm-filter" data-filter="pending">En attente</button>
+        <button type="button" class="adm-filter" data-filter="failed">Échouées</button>
+        <button type="button" class="adm-filter" data-filter="all">Toutes</button>
+      </div>
+      <input type="search" id="admSearch" class="adm-input small" placeholder="Rechercher : code, produit, téléphone…">
+    </div>
+
+    <p id="admEmpty" class="adm-empty" hidden>Aucune commande dans cette liste.</p>
+    <div id="admList" class="adm-list"></div>
+  </section>
+</main>
+
+<script src="assets/admin.js?v=20261114"></script>
+</body>
+</html>

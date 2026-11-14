@@ -19,6 +19,23 @@
   const SERVER_PREFIXES = ["MLBB-", "GI-", "BSR-"];
   let pollTimer = null;
   let pollDeadline = 0;
+  let currentCode = "";
+
+  // Affiche le code de commande dans un encadré (avec bouton Copier).
+  function renderCode(box) {
+    if (!box) return;
+    box.hidden = !currentCode;
+    box.querySelector(".om-code-value").textContent = currentCode;
+  }
+
+  // Garde les dernières commandes dans ce navigateur (page "Suivre ma commande").
+  function rememberOrder() {
+    try {
+      const list = JSON.parse(localStorage.getItem("apay_orders") || "[]").filter((o) => o.code !== currentCode);
+      list.unshift({ code: currentCode, label: currentLabel, amount: totalToPay(), date: new Date().toISOString() });
+      localStorage.setItem("apay_orders", JSON.stringify(list.slice(0, 10)));
+    } catch (e) { /* stockage indisponible : sans importance */ }
+  }
 
   function parsePrice(str) {
     return parseInt(String(str).replace(/[^\d]/g, ""), 10) || 0;
@@ -78,6 +95,7 @@
             <div class="om-spinner"></div>
             <h3 class="om-pending-title">Confirme le paiement sur ton téléphone</h3>
             <p class="om-pending-text">Une demande de paiement Mobile Money vient d'être envoyée. Compose ton code secret pour valider — cette fenêtre se met à jour automatiquement.</p>
+            <div class="om-code" id="omCodePending" hidden><span class="om-code-label">Ton code de commande</span><span class="om-code-value"></span><button type="button" class="om-code-copy">Copier</button></div>
           </div>
         </div>
 
@@ -86,6 +104,8 @@
             <div class="om-result-icon">✓</div>
             <h3 class="om-result-title">Paiement reçu !</h3>
             <p class="om-result-text" id="omSuccessText">Ta commande est confirmée. Tu recevras ton code très vite sur le contact indiqué.</p>
+            <div class="om-code" id="omCodeSuccess" hidden><span class="om-code-label">Ton code de commande</span><span class="om-code-value"></span><button type="button" class="om-code-copy">Copier</button></div>
+            <p class="om-code-hint">Garde ce code : il permet de <a href="/suivi.html" id="omTrackLink">suivre ta commande</a> et de nous contacter plus vite.</p>
             <div class="om-actions"><button type="button" class="om-confirm" id="omSuccessClose" style="flex:1">Fermer</button></div>
           </div>
         </div>
@@ -94,6 +114,7 @@
           <div class="om-result error">
             <div class="om-result-icon">✕</div>
             <h3 class="om-result-title" id="omErrorTitle">Paiement non confirmé</h3>
+            <div class="om-code" id="omCodeError" hidden><span class="om-code-label">Ton code de commande</span><span class="om-code-value"></span><button type="button" class="om-code-copy">Copier</button></div>
             <p class="om-result-text" id="omErrorText">Le paiement n'a pas abouti ou a pris trop de temps. Réessaie, ou contacte-nous sur WhatsApp si le souci persiste.</p>
             <div class="om-actions">
               <button type="button" class="om-cancel" id="omErrorRetry">Réessayer</button>
@@ -125,6 +146,10 @@
       closeBtn: overlay.querySelector(".om-close"),
       successText: overlay.querySelector("#omSuccessText"),
       successClose: overlay.querySelector("#omSuccessClose"),
+      codePending: overlay.querySelector("#omCodePending"),
+      codeSuccess: overlay.querySelector("#omCodeSuccess"),
+      codeError: overlay.querySelector("#omCodeError"),
+      trackLink: overlay.querySelector("#omTrackLink"),
       errorTitle: overlay.querySelector("#omErrorTitle"),
       errorText: overlay.querySelector("#omErrorText"),
       errorRetry: overlay.querySelector("#omErrorRetry"),
@@ -150,6 +175,13 @@
     });
     els.confirmBtn.addEventListener("click", handleConfirm);
     els.errorRetry.addEventListener("click", () => showState("form"));
+    overlay.querySelectorAll(".om-code-copy").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(currentCode); btn.textContent = "Copié ✓"; }
+        catch (e) { btn.textContent = "Sélectionne le code"; }
+        setTimeout(() => { btn.textContent = "Copier"; }, 2000);
+      });
+    });
   }
 
   function showState(name) {
@@ -191,6 +223,8 @@
     currentLabel = label;
     currentBasePrice = parsePrice(priceStr);
     selectedProvider = "";
+    currentCode = "";
+    [els.codePending, els.codeSuccess, els.codeError].forEach(renderCode);
     const needsServer = requireGameId && SERVER_PREFIXES.some((p) => currentProductId.startsWith(p));
 
     els.product.textContent = label;
@@ -271,6 +305,9 @@
       if (!res.ok || !data.ok || !data.reference) {
         throw new Error(data.error || "Échec du lancement du paiement.");
       }
+      currentCode = data.code || "";
+      if (currentCode) rememberOrder();
+      renderCode(els.codePending);
       showState("pending");
       startPolling(data.reference);
     } catch (err) {
@@ -300,6 +337,8 @@
       const data = await res.json();
       if (data.status === "success" || data.status === "paid" || data.status === "completed") {
         els.successText.textContent = `Ta commande "${currentLabel}" est confirmée. Tu recevras ton code très vite sur ${els.contact.value.trim()}.`;
+        renderCode(els.codeSuccess);
+        els.trackLink.href = "/suivi.html" + (currentCode ? "?code=" + encodeURIComponent(currentCode) : "");
         showState("success");
         return;
       }
@@ -315,7 +354,8 @@
 
   function showFailure(msg) {
     els.errorText.textContent = msg;
-    const waMsg = `Salut Apay Digital CG ! J'ai un souci avec le paiement de : ${currentLabel} (${formatFCFA(totalToPay())}).`;
+    renderCode(els.codeError);
+    const waMsg = `Salut Apay Digital CG ! J'ai un souci avec le paiement de : ${currentLabel} (${formatFCFA(totalToPay())})` + (currentCode ? ` — code de commande ${currentCode}.` : ".");
     els.errorWhatsapp.href = (window.waLink ? window.waLink(waMsg) : "https://wa.me/242069678759?text=" + encodeURIComponent(waMsg));
     showState("error");
   }

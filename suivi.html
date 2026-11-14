@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suivre ma commande | Apay Digital CG</title>
+<meta name="description" content="Suis ta commande Apay Digital CG avec ton code (AP-XXXXXX) : paiement, préparation et livraison de ton code.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#05070d">
+<meta property="og:title" content="Suivre ma commande — Apay Digital CG">
+<meta property="og:image" content="https://www.apay-digital-cg.store/assets/img/og-image.jpg">
+<link rel="canonical" href="https://www.apay-digital-cg.store/suivi.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=20261114b">
+<link rel="stylesheet" href="assets/apay-charte.css?v=20260907c">
+</head>
+<body data-apion-page="suivi">
+<header class="site-header">
+  <div class="nav-row wrap">
+    <a href="index.html" class="logo"><img src="assets/img/apay-icon.svg" alt="Apay Digital" class="logo-icon" width="36" height="36"><span class="logo-text"><span class="a1">Apay</span><span class="a2">Digital</span></span><span class="a3">CG</span></a>
+    <nav class="main-nav"><ul>
+        <li><a href="index.html" class="nav-link">Accueil</a></li>
+        <li class="has-dropdown"><a href="cartes-cadeaux.html" class="nav-link active">Store ▾</a><div class="dropdown">
+            <a href="cartes-cadeaux.html">Cartes Cadeau</a>
+            <a href="streaming.html">Streaming</a>
+            <a href="mobile-games.html">Jeux Mobile</a>
+            <a href="logiciels.html">Logiciels</a>
+            <a href="services.html">Services</a></div></li>
+        <li><a href="events.html" class="nav-link">Events</a></li>
+        <li><a href="hub.html" class="nav-link">Hub</a></li>
+        <li><a href="pass.html" class="nav-link">Pass</a></li>
+    </ul></nav>
+    <div class="header-cta"><a class="btn btn-primary btn-sm" href="#produits">Commander</a><button class="nav-toggle" aria-label="Ouvrir le menu">☰</button></div>
+  </div>
+</header>
+<main>
+  <div class="wrap"><nav class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">/</span><span class="current">Suivre ma commande</span></nav></div>
+  <section class="hero" style="padding:36px 0 20px;"><div class="wrap">
+    <span class="eyebrow">Suivi de commande</span>
+    <h1>Où en est <span class="accent">ma commande ?</span></h1>
+    <p class="lead">Entre le code reçu au moment du paiement (il ressemble à <strong>AP-7K3Q9X</strong>).</p>
+  </div></section>
+  <section class="section tight"><div class="wrap" style="max-width:640px">
+    <form class="track-form" id="trackForm" autocomplete="off">
+      <label for="trackCode" class="track-label">Code de commande</label>
+      <div class="track-row">
+        <input id="trackCode" name="code" class="track-input" placeholder="AP-XXXXXX" maxlength="12" autocapitalize="characters" spellcheck="false" required>
+        <button type="submit" class="btn btn-primary">Suivre</button>
+      </div>
+    </form>
+    <div id="trackResult" class="track-result" aria-live="polite" hidden></div>
+    <div id="trackRecent" class="track-recent" hidden>
+      <h2 class="track-recent-title">Tes commandes récentes sur cet appareil</h2>
+      <ul id="trackRecentList"></ul>
+    </div>
+    <p class="track-help">Un souci ? <a href="https://wa.me/242069678759" target="_blank" rel="noopener">Écris-nous sur WhatsApp</a> en donnant ton code de commande.</p>
+  </div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><img src="assets/img/apay-icon.svg" alt="Apay Digital" class="logo-icon" width="36" height="36"><span class="logo-text"><span class="a1">Apay</span><span class="a2">Digital</span></span><span class="a3">CG</span></a>
+        <p>PLAY · DIGITAL · MORE · Pointe-Noire.</p>
+      </div>
+      <div>
+        <h4>Store</h4>
+        <ul>
+          <li><a href="cartes-cadeaux.html">Cartes Cadeau</a></li>
+          <li><a href="streaming.html">Streaming</a></li>
+          <li><a href="mobile-games.html">Jeux Mobile</a></li>
+          <li><a href="logiciels.html">Logiciels</a></li>
+          <li><a href="services.html">Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Univers</h4>
+        <ul>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="hub.html">Hub</a></li>
+          <li><a href="pass.html">Pass</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Aide</h4>
+        <ul>
+          <li><a href="https://wa.me/242069678759" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+        <li><a href="suivi.html">Suivre ma commande</a></li>
+          <li><a href="cgv.html">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 ApayDigitalCG — Pointe-Noire, Congo.</span></div>
+  </div>
+</footer>
+<div class="apion-widget" id="apionWidget">
+  <button type="button" class="apion-float" id="apionFloat" aria-label="Discuter avec Apion"><span class="af-avatar"><img src="assets/img/apion-icon.png" alt="Apion"></span></button>
+  <div class="apion-panel" id="apionPanel" role="dialog" aria-hidden="true">
+    <div class="ap-header"><span class="ap-avatar-sm"><img src="assets/img/apion-icon.png" alt=""></span><div class="ap-header-text"><div class="ap-name">APION</div></div><button type="button" class="ap-close" id="apClose">×</button></div>
+    <div class="ap-messages" id="apMessages"></div><div class="ap-quick" id="apQuick"></div>
+    <form class="ap-input-row" id="apForm"><input type="text" id="apInput" class="ap-input" placeholder="Écrivez votre message…" autocomplete="off"><button type="submit" class="ap-send">➤</button></form>
+  </div>
+</div>
+<script src="assets/apion-data.js?v=20261114"></script>
+<script src="assets/apion-brain.js?v=20261114"></script>
+<script src="assets/script.js?v=20261114"></script>
+<script src="assets/checkout.js?v=20261114b"></script>
+<script src="assets/apion-ui.js?v=20261114"></script>
+<script src="assets/suivi.js?v=20261114"></script>
+</body>
+</html>

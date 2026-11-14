@@ -1157,3 +1157,62 @@ body::after{
 }
 .tax-note strong{ color:var(--paper); }
 .t-price small{ display:block; font-size:0.68rem; font-weight:500; opacity:0.7; letter-spacing:0; }
+
+/* =================== Code de commande (modale + suivi) =================== */
+.om-code{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  margin:16px 0 4px; padding:12px 14px; border-radius:12px;
+  background:rgba(46,124,246,0.10); border:1px dashed rgba(46,124,246,0.55);
+  text-align:left;
+}
+.om-code[hidden]{ display:none; }
+.om-code-label{ width:100%; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--paper-dim); }
+.om-code-value{ flex:1; font-family:ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size:1.25rem; font-weight:700; letter-spacing:0.06em; color:var(--paper); user-select:all; }
+.om-code-copy{
+  border:1px solid var(--line); background:var(--panel); color:var(--paper);
+  border-radius:8px; padding:6px 12px; font-size:0.8rem; font-weight:600; cursor:pointer;
+}
+.om-code-copy:hover{ border-color:rgba(46,124,246,0.7); }
+.om-code-hint{ font-size:0.8rem; color:var(--paper-dim); margin:6px 0 18px; line-height:1.45; }
+.om-code-hint a{ color:var(--azure, #2E7CF6); }
+
+/* =================== Page Suivre ma commande =================== */
+.track-label{ display:block; font-size:0.85rem; color:var(--paper-dim); margin-bottom:8px; }
+.track-row{ display:flex; gap:10px; flex-wrap:wrap; }
+.track-input{
+  flex:1; min-width:180px; padding:14px 16px; border-radius:12px;
+  background:var(--panel); border:1px solid var(--line); color:var(--paper);
+  font-family:ui-monospace, Menlo, Consolas, monospace; font-size:1.1rem; letter-spacing:0.08em; text-transform:uppercase;
+}
+.track-input:focus{ outline:none; border-color:var(--azure); }
+.track-result{ margin-top:22px; }
+.track-card{ background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:20px; }
+.track-head{ display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:baseline; }
+.track-code{ font-family:ui-monospace, Menlo, Consolas, monospace; font-weight:700; font-size:1.15rem; letter-spacing:0.06em; }
+.track-date{ font-size:0.8rem; color:var(--paper-dim); }
+.track-product{ margin:12px 0 2px; font-weight:600; }
+.track-amount{ margin:0 0 16px; color:var(--paper-dim); }
+.track-steps{ list-style:none; padding:0; margin:0 0 14px; display:grid; gap:10px; }
+.track-steps li{ position:relative; padding-left:30px; color:var(--paper-dim); }
+.track-steps li::before{
+  content:''; position:absolute; left:0; top:2px; width:18px; height:18px; border-radius:50%;
+  border:2px solid var(--line); box-sizing:border-box;
+}
+.track-steps li.done{ color:var(--paper); }
+.track-steps li.done::before{ background:#29D9B3; border-color:#29D9B3; }
+.track-steps li.current{ color:var(--paper); font-weight:600; }
+.track-steps li.current::before{ border-color:var(--azure); box-shadow:0 0 0 4px rgba(46,124,246,0.2); }
+.track-note{ font-size:0.88rem; line-height:1.5; color:var(--paper-dim); margin:0; }
+.track-msg{ padding:12px 14px; border-radius:10px; background:var(--panel); border:1px solid var(--line); margin:0; }
+.track-msg.error{ border-color:rgba(255,122,122,0.5); color:#FFB3B3; }
+.track-recent{ margin-top:28px; }
+.track-recent-title{ font-size:1rem; margin:0 0 10px; }
+.track-recent ul{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+.track-recent-item{
+  width:100%; text-align:left; padding:10px 14px; border-radius:10px; cursor:pointer;
+  background:var(--panel); border:1px solid var(--line); color:var(--paper-dim); font:inherit; font-size:0.85rem;
+}
+.track-recent-item strong{ color:var(--paper); font-family:ui-monospace, Menlo, Consolas, monospace; }
+.track-recent-item:hover{ border-color:var(--azure); }
+.track-help{ margin-top:24px; font-size:0.85rem; color:var(--paper-dim); }
+.track-help a{ color:var(--azure); }

@@ -1,5 +1,6 @@
 const crypto = require("crypto");
-const { setOrder, linkPublicId, hit } = require("./_kv");
+const { setOrder, linkPublicId, hit, reserveOrderCode, linkOrderCode } = require("./_kv");
+const { clientIp } = require("./_http");
 const { notifyTelegram, paidOrderMessage } = require("./_telegram");
 const CATALOG = require("./_catalog");
 
@@ -13,11 +14,6 @@ const MAX_QTY = 10;
 const RATE_WINDOW_SECONDS = 600;
 const MAX_PER_IP = 8;
 const MAX_PER_PHONE = 4;
-
-function clientIp(req) {
-  const fwd = String(req.headers["x-forwarded-for"] || "");
-  return (fwd.split(",")[0] || req.headers["x-real-ip"] || "inconnue").trim();
-}
 
 function cleanText(value, max) {
   return String(value || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, max);
@@ -91,6 +87,8 @@ module.exports = async (req, res) => {
 
     const orderId = `apay_${Date.now()}_${crypto.randomBytes(4).toString("hex")}`;
     const publicId = crypto.randomBytes(16).toString("hex");
+    // Code lisible donné au client (ex. AP-7K3Q9X) pour suivre sa commande.
+    const code = await reserveOrderCode();
 
     const openpayRes = await fetch(OPENPAY_URL, {
       method: "POST",
@@ -105,7 +103,7 @@ module.exports = async (req, res) => {
         provider,
         customer_external_id: orderId,
         customer: { name: contact, phone: cleanPhone },
-        metadata: { order_id: orderId, product: productLabel },
+        metadata: { order_id: orderId, order_code: code, product: productLabel },
       }),
     });
 
@@ -140,6 +138,7 @@ module.exports = async (req, res) => {
 
     const orderRecord = {
       reference,
+      code,
       orderId,
       productId: String(body.productId),
       productLabel,
@@ -153,6 +152,7 @@ module.exports = async (req, res) => {
       status: initialStatus,
       createdAt: new Date().toISOString(),
       notified: false,
+      delivered: false,
     };
 
     if (initialStatus === "success") {
@@ -162,9 +162,10 @@ module.exports = async (req, res) => {
 
     await setOrder(reference, orderRecord);
     await linkPublicId(publicId, reference);
+    await linkOrderCode(code, reference);
 
     // On ne renvoie PAS la référence OpenPay : seul le serveur la connaît.
-    res.status(200).json({ ok: true, reference: publicId, status: initialStatus, amount, productLabel });
+    res.status(200).json({ ok: true, reference: publicId, code, status: initialStatus, amount, productLabel });
   } catch (err) {
     console.error("Erreur create-payment:", err);
     res.status(500).json({ ok: false, error: "Erreur serveur, réessaie dans un instant." });

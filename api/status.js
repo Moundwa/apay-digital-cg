@@ -37,6 +37,8 @@ module.exports = async (req, res) => {
 
     res.status(200).json({
       status: order.status === "suspect" ? "pending" : order.status,
+      code: order.code || null,
+      delivered: !!order.delivered,
       productLabel: order.productLabel,
       amount: order.amount,
     });

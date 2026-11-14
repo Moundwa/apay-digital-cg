@@ -28,7 +28,7 @@ async function notifyTelegram(text) {
 
 function paidOrderMessage(order, reference) {
   const lines = [
-    "💰 <b>Nouvelle commande payée</b>",
+    "💰 <b>Nouvelle commande payée</b>" + (order.code ? ` — <code>${escapeHtml(order.code)}</code>` : ""),
     `Produit : ${escapeHtml(order.productLabel)}`,
     `Montant : ${Number(order.amount).toLocaleString("fr-FR")} FCFA`,
     `Opérateur : ${escapeHtml(order.provider)}`,
