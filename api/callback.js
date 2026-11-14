@@ -2,10 +2,13 @@ const crypto = require("crypto");
 const { getOrder } = require("./_kv");
 const { settleOrder } = require("./_payment");
 
-// URL de callback à déclarer dans le tableau de bord OpenPay :
-//   https://www.apay-digital-cg.store/api/callback?secret=<OPENPAY_CALLBACK_SECRET>
-// OpenPay ne signe pas ses callbacks : on vérifie ce secret, puis on redemande
-// TOUJOURS le vrai statut à l'API OpenPay avant de valider une commande.
+// OpenPay ne signe pas ses callbacks. Leur contenu n'est donc JAMAIS cru :
+// un callback sert seulement de signal, et le vrai statut + montant sont
+// toujours relus via l'API OpenPay (settleOrder) avant de valider une commande.
+//
+// Protection supplémentaire facultative : si l'URL déclarée chez OpenPay contient
+// ?secret=<OPENPAY_CALLBACK_SECRET>, un secret présent mais faux est refusé.
+// (Le tableau de bord OpenPay a un bug qui peut empêcher de modifier l'URL.)
 const CALLBACK_SECRET = process.env.OPENPAY_CALLBACK_SECRET;
 
 function sameSecret(given, expected) {
@@ -21,8 +24,9 @@ module.exports = async (req, res) => {
     return;
   }
 
-  if (!CALLBACK_SECRET || !sameSecret(req.query?.secret, CALLBACK_SECRET)) {
-    console.error(CALLBACK_SECRET ? "Callback refusé : secret absent ou invalide." : "OPENPAY_CALLBACK_SECRET manquante : callback ignoré.");
+  const given = req.query?.secret;
+  if (given !== undefined && (!CALLBACK_SECRET || !sameSecret(given, CALLBACK_SECRET))) {
+    console.error("Callback refusé : secret invalide.");
     res.status(200).json({ success: true });
     return;
   }
