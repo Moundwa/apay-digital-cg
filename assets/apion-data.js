@@ -16,11 +16,11 @@ const ApionData = (() => {
       currency: "Portefeuille PSN", page: "cartes-cadeaux.html", anchor: "#playstation",
       delivery: "10 minutes",
       tickets: [
-        { label: "PSN 10€", price: 7980 },
-        { label: "PSN 20€", price: 15760 },
-        { label: "PSN 30€", price: 23540 },
-        { label: "PSN 50€", price: 36200 },
-        { label: "PSN 100€", price: 72700 }
+        { id: "PSN-010", label: "PSN 10€", price: 7980 },
+        { id: "PSN-020", label: "PSN 20€", price: 15760 },
+        { id: "PSN-030", label: "PSN 30€", price: 23540 },
+        { id: "PSN-050", label: "PSN 50€", price: 36200 },
+        { id: "PSN-100", label: "PSN 100€", price: 72700 }
       ]
     },
     xbox: {
@@ -28,11 +28,11 @@ const ApionData = (() => {
       currency: "Crédit Xbox Live", page: "cartes-cadeaux.html", anchor: "#xbox",
       delivery: "10 minutes",
       tickets: [
-        { label: "Xbox 10€", price: 7980 },
-        { label: "Xbox 20€", price: 15760 },
-        { label: "Xbox 30€", price: 23540 },
-        { label: "Xbox 50€", price: 36200 },
-        { label: "Xbox 100€", price: 72700 }
+        { id: "XBX-010", label: "Xbox 10€", price: 7980 },
+        { id: "XBX-020", label: "Xbox 20€", price: 15760 },
+        { id: "XBX-030", label: "Xbox 30€", price: 23540 },
+        { id: "XBX-050", label: "Xbox 50€", price: 36200 },
+        { id: "XBX-100", label: "Xbox 100€", price: 72700 }
       ]
     },
     netflix: {
@@ -40,9 +40,9 @@ const ApionData = (() => {
       currency: "Premium 4K", page: "streaming.html", anchor: "",
       delivery: "5 minutes",
       tickets: [
-        { label: "Netflix 1 Mois", price: 3500 },
-        { label: "Netflix 3 Mois", price: 10000 },
-        { label: "Netflix 12 Mois", price: 37500 }
+        { id: "NFX-01M", label: "Netflix 1 Mois", price: 3500 },
+        { id: "NFX-03M", label: "Netflix 3 Mois", price: 10000 },
+        { id: "NFX-12M", label: "Netflix 12 Mois", price: 37500 }
       ]
     },
     freefire: {
@@ -50,12 +50,12 @@ const ApionData = (() => {
       currency: "Diamants", page: "mobile-games.html", anchor: "#freefire",
       delivery: "5 minutes",
       tickets: [
-        { label: "100 Diamants", price: 1200 },
-        { label: "210 Diamants", price: 2200 },
-        { label: "310 Diamants", price: 2700 },
-        { label: "520 Diamants", price: 4200 },
-        { label: "1060 Diamants", price: 8200 },
-        { label: "2180 Diamants", price: 16700 }
+        { id: "FF-100", label: "100 Diamants", price: 1200 },
+        { id: "FF-210", label: "210 Diamants", price: 2200 },
+        { id: "FF-310", label: "310 Diamants", price: 2700 },
+        { id: "FF-520", label: "520 Diamants", price: 4200 },
+        { id: "FF-1060", label: "1060 Diamants", price: 8200 },
+        { id: "FF-2180", label: "2180 Diamants", price: 16700 }
       ]
     },
     pubgm: {
@@ -63,10 +63,10 @@ const ApionData = (() => {
       currency: "UC", page: "mobile-games.html", anchor: "#pubgm",
       delivery: "5 minutes",
       tickets: [
-        { label: "60 UC", price: 1200 },
-        { label: "325 UC", price: 3950 },
-        { label: "660 UC", price: 7700 },
-        { label: "1800 UC", price: 18950 }
+        { id: "PUBG-060", label: "60 UC", price: 1200 },
+        { id: "PUBG-325", label: "325 UC", price: 3950 },
+        { id: "PUBG-660", label: "660 UC", price: 7700 },
+        { id: "PUBG-1800", label: "1800 UC", price: 18950 }
       ]
     },
     mlbb: {
@@ -74,13 +74,13 @@ const ApionData = (() => {
       currency: "Diamants", page: "mobile-games.html", anchor: "#mlbb",
       delivery: "5 minutes",
       tickets: [
-        { label: "86 Diamants", price: 1325 },
-        { label: "172 Diamants", price: 2475 },
-        { label: "257 Diamants", price: 3750 },
-        { label: "336 Diamants", price: 4500 },
-        { label: "570 Diamants", price: 7725 },
-        { label: "716 Diamants", price: 9225 },
-        { label: "1164 Diamants", price: 12875 }
+        { id: "MLBB-086", label: "86 Diamants", price: 1325 },
+        { id: "MLBB-172", label: "172 Diamants", price: 2475 },
+        { id: "MLBB-257", label: "257 Diamants", price: 3750 },
+        { id: "MLBB-336", label: "336 Diamants", price: 4500 },
+        { id: "MLBB-570", label: "570 Diamants", price: 7725 },
+        { id: "MLBB-716", label: "716 Diamants", price: 9225 },
+        { id: "MLBB-1164", label: "1164 Diamants", price: 12875 }
       ]
     },
     genshin: {
@@ -88,13 +88,13 @@ const ApionData = (() => {
       currency: "Cristaux Genèse", page: "mobile-games.html", anchor: "#genshin",
       delivery: "5 minutes",
       tickets: [
-        { label: "60 Cristaux Genèse", price: 800 },
-        { label: "330 Cristaux Genèse", price: 3200 },
-        { label: "1 090 Cristaux Genèse", price: 9700 },
-        { label: "2 240 Cristaux Genèse", price: 19500 },
-        { label: "3 880 Cristaux Genèse", price: 32500 },
-        { label: "8 080 Cristaux Genèse", price: 65000 },
-        { label: "Pass Bénédiction Lunaire", price: 3200 }
+        { id: "GI-060", label: "60 Cristaux Genèse", price: 800 },
+        { id: "GI-330", label: "330 Cristaux Genèse", price: 3200 },
+        { id: "GI-1090", label: "1 090 Cristaux Genèse", price: 9700 },
+        { id: "GI-2240", label: "2 240 Cristaux Genèse", price: 19500 },
+        { id: "GI-3880", label: "3 880 Cristaux Genèse", price: 32500 },
+        { id: "GI-8080", label: "8 080 Cristaux Genèse", price: 65000 },
+        { id: "GI-WLK", label: "Pass Bénédiction Lunaire", price: 3200 }
       ]
     },
     bleach: {
@@ -102,14 +102,14 @@ const ApionData = (() => {
       currency: "Jade Spirituel", page: "mobile-games.html", anchor: "#bleach",
       delivery: "5 minutes",
       tickets: [
-        { label: "60 Jade Spirituel", price: 800 },
-        { label: "330 Jade Spirituel", price: 3200 },
-        { label: "1 080 Jade Spirituel", price: 9700 },
-        { label: "2 180 Jade Spirituel", price: 19500 },
-        { label: "3 680 Jade Spirituel", price: 32500 },
-        { label: "7 480 Jade Spirituel", price: 65000 },
-        { label: "Carte Mensuelle", price: 3200 },
-        { label: "Phase Training (Pass de Combat)", price: 6450 } // vérifié via SEAGM ($8.15) x taux Apay (~790 FCFA/$, dérivé de la Carte Mensuelle)
+        { id: "BSR-060", label: "60 Jade Spirituel", price: 800 },
+        { id: "BSR-330", label: "330 Jade Spirituel", price: 3200 },
+        { id: "BSR-1080", label: "1 080 Jade Spirituel", price: 9700 },
+        { id: "BSR-2180", label: "2 180 Jade Spirituel", price: 19500 },
+        { id: "BSR-3680", label: "3 680 Jade Spirituel", price: 32500 },
+        { id: "BSR-7480", label: "7 480 Jade Spirituel", price: 65000 },
+        { id: "BSR-MNT", label: "Carte Mensuelle", price: 3200 },
+        { id: "BSR-PT", label: "Phase Training (Pass de Combat)", price: 6450 } // vérifié via SEAGM ($8.15) x taux Apay (~790 FCFA/$, dérivé de la Carte Mensuelle)
       ]
     },
 
@@ -119,11 +119,11 @@ const ApionData = (() => {
       currency: "Carte eShop", page: "cartes-cadeaux.html", anchor: "#nintendo",
       delivery: "10 minutes", priceStatus: "estimate",
       tickets: [
-        { label: "eShop 10€", price: 7980 },
-        { label: "eShop 20€", price: 15760 },
-        { label: "eShop 30€", price: 23540 },
-        { label: "eShop 50€", price: 36200 },
-        { label: "eShop 100€", price: 72700 }
+        { id: "NIN-010", label: "eShop 10€", price: 7980 },
+        { id: "NIN-020", label: "eShop 20€", price: 15760 },
+        { id: "NIN-030", label: "eShop 30€", price: 23540 },
+        { id: "NIN-050", label: "eShop 50€", price: 36200 },
+        { id: "NIN-100", label: "eShop 100€", price: 72700 }
       ]
     },
     steam: {
@@ -131,11 +131,11 @@ const ApionData = (() => {
       currency: "Portefeuille Steam", page: "cartes-cadeaux.html", anchor: "#steam",
       delivery: "10 minutes", priceStatus: "estimate",
       tickets: [
-        { label: "Steam 10€", price: 7980 },
-        { label: "Steam 20€", price: 15760 },
-        { label: "Steam 30€", price: 23540 },
-        { label: "Steam 50€", price: 36200 },
-        { label: "Steam 100€", price: 72700 }
+        { id: "STM-010", label: "Steam 10€", price: 7980 },
+        { id: "STM-020", label: "Steam 20€", price: 15760 },
+        { id: "STM-030", label: "Steam 30€", price: 23540 },
+        { id: "STM-050", label: "Steam 50€", price: 36200 },
+        { id: "STM-100", label: "Steam 100€", price: 72700 }
       ]
     },
     spotify: {
@@ -143,9 +143,9 @@ const ApionData = (() => {
       currency: "Premium Individuel", page: "streaming.html", anchor: "#spotify",
       delivery: "5 minutes", priceStatus: "estimate",
       tickets: [
-        { label: "Spotify 1 Mois", price: 2500 },
-        { label: "Spotify 3 Mois", price: 7000 },
-        { label: "Spotify 12 Mois", price: 25000 }
+        { id: "SPT-01M", label: "Spotify 1 Mois", price: 2500 },
+        { id: "SPT-03M", label: "Spotify 3 Mois", price: 7000 },
+        { id: "SPT-12M", label: "Spotify 12 Mois", price: 25000 }
       ]
     },
     disney: {
@@ -153,9 +153,9 @@ const ApionData = (() => {
       currency: "Standard", page: "streaming.html", anchor: "#disney",
       delivery: "5 minutes", priceStatus: "estimate",
       tickets: [
-        { label: "Disney+ 1 Mois", price: 3000 },
-        { label: "Disney+ 3 Mois", price: 8500 },
-        { label: "Disney+ 12 Mois", price: 32000 }
+        { id: "DNY-01M", label: "Disney+ 1 Mois", price: 3000 },
+        { id: "DNY-03M", label: "Disney+ 3 Mois", price: 8500 },
+        { id: "DNY-12M", label: "Disney+ 12 Mois", price: 32000 }
       ]
     },
     office: {
@@ -163,9 +163,9 @@ const ApionData = (() => {
       currency: "Licence", page: "logiciels.html", anchor: "#office",
       delivery: "10 minutes", priceStatus: "estimate",
       tickets: [
-        { label: "Microsoft 365 Personnel (1 an)", price: 15000 },
-        { label: "Microsoft 365 Famille (1 an)", price: 25000 },
-        { label: "Office 2024 Professionnel", price: 35000 }
+        { id: "OFC-M365P", label: "Microsoft 365 Personnel (1 an)", price: 15000 },
+        { id: "OFC-M365F", label: "Microsoft 365 Famille (1 an)", price: 25000 },
+        { id: "OFC-2024P", label: "Office 2024 Professionnel", price: 35000 }
       ]
     },
     adobe: {
@@ -173,9 +173,9 @@ const ApionData = (() => {
       currency: "Abonnement", page: "logiciels.html", anchor: "#adobe",
       delivery: "10 minutes", priceStatus: "estimate",
       tickets: [
-        { label: "Adobe CC 1 Mois", price: 8000 },
-        { label: "Adobe CC 3 Mois", price: 20000 },
-        { label: "Adobe CC 12 Mois", price: 65000 }
+        { id: "ADB-01M", label: "Adobe CC 1 Mois", price: 8000 },
+        { id: "ADB-03M", label: "Adobe CC 3 Mois", price: 20000 },
+        { id: "ADB-12M", label: "Adobe CC 12 Mois", price: 65000 }
       ]
     },
     telegram: {
@@ -183,7 +183,7 @@ const ApionData = (() => {
       currency: "Service", page: "services.html", anchor: "#telegram",
       delivery: "quelques minutes",
       tickets: [
-        { label: "Vérification compte Telegram", price: 1000 }
+        { id: "TLG-VRF", label: "Vérification compte Telegram", price: 1000 }
       ]
     }
   };

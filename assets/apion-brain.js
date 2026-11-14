@@ -113,7 +113,7 @@ const ApionBrain = (() => {
       return {
         emoji: item.icon,
         text: `${item.name} — ${ApionData.formatPrice(ticket.price)}. On valide ?`,
-        ticket: { name: `${item.name}`, price: ApionData.formatPrice(ticket.price), raw: ticket, category: item.category },
+        ticket: { id: ticket.id, qty: 1, unitPrice: ticket.price, name: `${item.name}`, price: ApionData.formatPrice(ticket.price), raw: ticket, category: item.category },
         quickReplies: ["Je valide cette commande"],
         page: item.page, anchor: item.anchor
       };
@@ -126,7 +126,7 @@ const ApionBrain = (() => {
       return {
         emoji: item.icon,
         text: `Très bien, pour ${ApionData.formatPrice(amount)} sur ${item.name}, voici ce qui s'en rapproche le plus :`,
-        ticket: { name: `${item.name} — ${ticket.label}`, price: ApionData.formatPrice(ticket.price), raw: ticket, category: item.category },
+        ticket: { id: ticket.id, qty: 1, unitPrice: ticket.price, name: `${item.name} — ${ticket.label}`, price: ApionData.formatPrice(ticket.price), raw: ticket, category: item.category },
         quickReplies: ["Je valide cette commande", "Voir tous les montants", "Autre montant"],
         page: item.page, anchor: item.anchor
       };
@@ -278,13 +278,20 @@ const ApionBrain = (() => {
     return {
       emoji: "🎉",
       text,
-      ticket: { name: label, price: ApionData.formatPrice(total), category: memory.itemRef.category },
+      ticket: { id: memory.chosenTicket.id, qty, unitPrice: memory.chosenTicket.price, name: label, price: ApionData.formatPrice(total), category: memory.itemRef.category },
       quickReplies: ["🎮 Recharger un jeu", "🎬 Streaming"]
     };
   }
 
   function replyQuantity(qty){
     if (!memory.chosenTicket || !memory.itemRef) return replyUnknown();
+    if (qty > 10) {
+      return {
+        emoji: "🙏",
+        text: "Pour plus de 10 unités d'un coup, écris-nous sur WhatsApp : on prépare ta commande à la main.",
+        quickReplies: ["Autre montant"]
+      };
+    }
     memory.pendingQty = qty;
     saveMemory(memory);
     const total = memory.chosenTicket.price * qty;
@@ -335,7 +342,7 @@ const ApionBrain = (() => {
         return {
           emoji: memory.itemRef.icon,
           text: `Parfait : ${memory.itemRef.name} — ${exact.label} pour ${ApionData.formatPrice(exact.price)}. On valide ?`,
-          ticket: { name: `${memory.itemRef.name} — ${exact.label}`, price: ApionData.formatPrice(exact.price), category: memory.itemRef.category },
+          ticket: { id: exact.id, qty: 1, unitPrice: exact.price, name: `${memory.itemRef.name} — ${exact.label}`, price: ApionData.formatPrice(exact.price), category: memory.itemRef.category },
           quickReplies: ["Je valide cette commande", "Voir tous les montants", "Autre montant"]
         };
       }

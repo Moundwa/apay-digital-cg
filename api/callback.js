@@ -1,16 +1,35 @@
+const crypto = require("crypto");
 const { getOrder, setOrder } = require("./_kv");
-const { notifyTelegram } = require("./_telegram");
+const { notifyTelegram, paidOrderMessage, escapeHtml } = require("./_telegram");
+
+// URL de callback à déclarer chez OpenPay :
+//   https://www.apay-digital-cg.store/api/callback?secret=<OPENPAY_CALLBACK_SECRET>
+// Sans ce secret, n'importe qui pourrait déclarer une commande "payée".
+const CALLBACK_SECRET = process.env.OPENPAY_CALLBACK_SECRET;
 
 const SUCCESS_VALUES = ["success", "paid", "completed", "successful"];
 const FAILURE_VALUES = ["failed", "error", "cancelled", "canceled", "declined"];
 
-function escapeHtml(str) {
-  return String(str).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+function sameSecret(given, expected) {
+  const a = Buffer.from(String(given || ""));
+  const b = Buffer.from(String(expected));
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
 module.exports = async (req, res) => {
   // OpenPay exige impérativement un code HTTP 200, même en cas de souci de notre côté.
   if (req.method !== "POST") {
+    res.status(200).json({ ok: true });
+    return;
+  }
+
+  if (!CALLBACK_SECRET) {
+    console.error("OPENPAY_CALLBACK_SECRET manquante : callback ignoré par sécurité.");
+    res.status(200).json({ ok: true });
+    return;
+  }
+  if (!sameSecret(req.query?.secret, CALLBACK_SECRET)) {
+    console.error("Callback refusé : secret absent ou invalide.");
     res.status(200).json({ ok: true });
     return;
   }
@@ -33,26 +52,29 @@ module.exports = async (req, res) => {
       return;
     }
 
-    const isSuccess = SUCCESS_VALUES.includes(rawStatus);
+    let isSuccess = SUCCESS_VALUES.includes(rawStatus);
     const isFailure = FAILURE_VALUES.includes(rawStatus);
-    const normalizedStatus = isSuccess ? "success" : isFailure ? "failed" : rawStatus || order.status;
+
+    // Si OpenPay indique le montant payé, il doit correspondre exactement à la commande.
+    const paidAmount = body.amount ?? body.data?.amount;
+    if (isSuccess && paidAmount !== undefined && Number(paidAmount) !== Number(order.amount)) {
+      isSuccess = false;
+      console.error("Montant payé différent de la commande:", paidAmount, order.amount, reference);
+      await notifyTelegram(
+        `⚠️ <b>Paiement suspect — NE PAS LIVRER</b>\nRéférence : ${escapeHtml(reference)}\n` +
+          `Montant attendu : ${order.amount} FCFA\nMontant reçu : ${escapeHtml(paidAmount)} FCFA`
+      );
+    }
+
+    // Une commande déjà payée ne repasse jamais à un autre statut.
+    const normalizedStatus =
+      order.status === "success" ? "success" : isSuccess ? "success" : isFailure ? "failed" : order.status;
 
     const updatedOrder = { ...order, status: normalizedStatus, callbackAt: new Date().toISOString() };
 
-    if (isSuccess && !order.notified) {
+    if (normalizedStatus === "success" && !order.notified) {
       updatedOrder.notified = true;
-      const lines = [
-        "💰 <b>Nouvelle commande payée</b>",
-        `Produit : ${escapeHtml(order.productLabel)}`,
-        `Montant : ${order.amount.toLocaleString("fr-FR")} FCFA`,
-        `Opérateur : ${escapeHtml(order.provider)}`,
-        `Tél. paiement : ${escapeHtml(order.phone)}`,
-        `Contact livraison : ${escapeHtml(order.contact)}`,
-      ];
-      if (order.gameId) lines.push(`ID en jeu : ${escapeHtml(order.gameId)}`);
-      if (order.server) lines.push(`Serveur/Zone : ${escapeHtml(order.server)}`);
-      lines.push(`Référence : ${escapeHtml(reference)}`);
-      await notifyTelegram(lines.join("\n"));
+      await notifyTelegram(paidOrderMessage(order, reference));
     }
 
     await setOrder(reference, updatedOrder);

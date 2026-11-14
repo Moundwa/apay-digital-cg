@@ -82,11 +82,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <button type="button" class="ap-tc-buy">Commander</button>
       `;
       card.querySelector(".ap-tc-buy").addEventListener("click", () => {
-        const isMobile = response.ticket.category === "mobile";
+        const t = response.ticket;
+        const isMobile = t.category === "mobile";
+        // On passe le prix UNITAIRE hors taxe : la modale ajoute elle-même la taxe
+        // (avant, le total déjà taxé était repassé et la taxe comptée deux fois).
+        const unit = ApionData.formatPrice(t.unitPrice != null ? t.unitPrice : (t.raw ? t.raw.price : 0));
+        const id = t.id || (t.raw && t.raw.id);
         if (isMobile && typeof openOrderModal === "function") {
-          openOrderModal(response.ticket.name, response.ticket.price);
+          openOrderModal(t.name, unit, id, t.qty || 1);
         } else if (typeof orderItem === "function") {
-          orderItem(response.ticket.name, response.ticket.price);
+          orderItem(t.name, unit, id, t.qty || 1);
         }
       });
       bubbleWrap.appendChild(card);

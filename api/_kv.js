@@ -38,4 +38,21 @@ async function getOrder(reference) {
   }
 }
 
-module.exports = { setOrder, getOrder };
+// Le navigateur ne connaît qu'un identifiant public aléatoire ; la référence
+// OpenPay (utilisée par le callback) ne lui est jamais transmise.
+async function linkPublicId(publicId, reference) {
+  await command(["SET", `pub:${publicId}`, reference, "EX", String(ORDER_TTL_SECONDS)]);
+}
+
+async function getReferenceByPublicId(publicId) {
+  return command(["GET", `pub:${publicId}`]);
+}
+
+// Compteur à fenêtre fixe : renvoie le nombre d'appels dans la fenêtre en cours.
+async function hit(key, windowSeconds) {
+  const count = await command(["INCR", `rl:${key}`]);
+  if (count === 1) await command(["EXPIRE", `rl:${key}`, String(windowSeconds)]);
+  return count;
+}
+
+module.exports = { setOrder, getOrder, linkPublicId, getReferenceByPublicId, hit };

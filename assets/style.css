@@ -1140,3 +1140,20 @@ body::after{
 .om-result.error .om-result-icon{ background:rgba(255,122,122,0.15); color:#FF7A7A; }
 .om-result-title{ font-family:var(--font-display); font-size:1.1rem; margin:0 0 8px; }
 .om-result-text{ color:var(--paper-dim); font-size:0.86rem; line-height:1.5; margin:0 0 22px; }
+
+/* =================== Correctifs nov. 2026 =================== */
+/* Sur téléphone, le robot Apion est plus petit et la page garde une marge
+   en bas : il ne cache plus les boutons "Commander". */
+@media (max-width: 600px){
+  .apion-widget{ bottom:12px; right:12px; }
+  .apion-float .af-avatar{ width:48px; height:48px; }
+  main{ padding-bottom:84px; }
+}
+/* Mention des frais jeux mobile, visible avant le paiement */
+.tax-note{
+  margin:14px 0 4px; padding:10px 14px; border-radius:10px;
+  background:rgba(255,138,30,0.08); border:1px solid rgba(255,138,30,0.3);
+  color:var(--paper-dim); font-size:0.85rem; line-height:1.45;
+}
+.tax-note strong{ color:var(--paper); }
+.t-price small{ display:block; font-size:0.68rem; font-weight:500; opacity:0.7; letter-spacing:0; }

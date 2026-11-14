@@ -12,7 +12,11 @@
   let currentLabel = "";
   let currentBasePrice = 0;
   let requireGameId = false;
+  let currentProductId = "";
+  let currentQty = 1;
   let selectedProvider = "";
+  // Jeux qui ont besoin d'un serveur / Zone ID en plus de l'ID joueur
+  const SERVER_PREFIXES = ["MLBB-", "GI-", "BSR-"];
   let pollTimer = null;
   let pollDeadline = 0;
 
@@ -182,13 +186,16 @@
     opts = opts || {};
     requireGameId = !!opts.requireGameId;
     if (!overlay) buildModal();
+    currentProductId = opts.productId || "";
+    currentQty = Math.max(1, parseInt(opts.qty, 10) || 1);
     currentLabel = label;
     currentBasePrice = parsePrice(priceStr);
     selectedProvider = "";
+    const needsServer = requireGameId && SERVER_PREFIXES.some((p) => currentProductId.startsWith(p));
 
     els.product.textContent = label;
     els.gameIdField.style.display = requireGameId ? "" : "none";
-    els.serverField.style.display = requireGameId ? "" : "none";
+    els.serverField.style.display = needsServer ? "" : "none";
     els.gameId.value = "";
     els.server.value = "";
     els.phone.value = "242";
@@ -243,9 +250,10 @@
     els.confirmBtn.disabled = true;
     els.confirmBtn.textContent = "Envoi en cours…";
 
+    // Le prix n'est PAS envoyé : le serveur le relit dans son catalogue à partir du code produit.
     const payload = {
-      productLabel: currentLabel,
-      amount: totalToPay(),
+      productId: currentProductId,
+      qty: currentQty,
       phone: phone.replace(/\D/g, ""),
       provider: selectedProvider,
       contact: contact,
@@ -314,6 +322,11 @@
 
   // Exposées globalement — mêmes signatures que l'ancien flux WhatsApp,
   // donc aucun changement nécessaire dans les boutons "Commander" existants.
-  window.orderItem = function (label, price) { openModal(label, price, { requireGameId: false }); };
-  window.openOrderModal = function (label, price) { openModal(label, price, { requireGameId: true }); };
+  // price = prix unitaire hors taxe affiché ; productId = code du ticket (ex. "FF-100").
+  window.orderItem = function (label, price, productId, qty) {
+    openModal(label, parsePrice(price) * (qty || 1), { requireGameId: false, productId, qty });
+  };
+  window.openOrderModal = function (label, price, productId, qty) {
+    openModal(label, parsePrice(price) * (qty || 1), { requireGameId: true, productId, qty });
+  };
 })();

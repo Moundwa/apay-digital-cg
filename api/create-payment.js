@@ -1,8 +1,27 @@
-const { setOrder } = require("./_kv");
-const { notifyTelegram } = require("./_telegram");
+const crypto = require("crypto");
+const { setOrder, linkPublicId, hit } = require("./_kv");
+const { notifyTelegram, paidOrderMessage } = require("./_telegram");
+const CATALOG = require("./_catalog");
 
 const OPENPAY_API_KEY = process.env.OPENPAY_API_KEY;
 const OPENPAY_URL = "https://api.openpay-cg.com/v1/transaction/payment";
+
+const MOBILE_TAX_RATE = 0.035; // jeux mobile uniquement — même règle que checkout.js
+const MAX_QTY = 10;
+
+// Limites anti-abus (fenêtre de 10 minutes)
+const RATE_WINDOW_SECONDS = 600;
+const MAX_PER_IP = 8;
+const MAX_PER_PHONE = 4;
+
+function clientIp(req) {
+  const fwd = String(req.headers["x-forwarded-for"] || "");
+  return (fwd.split(",")[0] || req.headers["x-real-ip"] || "inconnue").trim();
+}
+
+function cleanText(value, max) {
+  return String(value || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, max);
+}
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
@@ -16,30 +35,62 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { productLabel, amount, phone, provider, contact, gameId, server } = req.body || {};
+  const body = req.body || {};
 
-  // Validation basique côté serveur (ne jamais faire confiance au client)
-  if (!productLabel || !amount || !phone || !provider || !contact) {
-    res.status(400).json({ ok: false, error: "Champs manquants." });
+  // ---- Produit et prix : uniquement depuis le catalogue serveur ----
+  const product = CATALOG[String(body.productId || "")];
+  if (!product) {
+    res.status(400).json({ ok: false, error: "Produit introuvable. Recharge la page et réessaie." });
     return;
   }
-  if (!["MTN", "AIRTEL"].includes(String(provider).toUpperCase())) {
+  const qty = body.qty === undefined ? 1 : Number(body.qty);
+  if (!Number.isInteger(qty) || qty < 1 || qty > MAX_QTY) {
+    res.status(400).json({ ok: false, error: "Quantité invalide." });
+    return;
+  }
+  const subtotal = product.price * qty;
+  const amount = product.mobile ? subtotal + Math.round(subtotal * MOBILE_TAX_RATE) : subtotal;
+  const productLabel = product.label + (qty > 1 ? ` x${qty}` : "");
+
+  // ---- Coordonnées du client ----
+  const provider = String(body.provider || "").toUpperCase();
+  if (!["MTN", "AIRTEL"].includes(provider)) {
     res.status(400).json({ ok: false, error: "Opérateur invalide." });
     return;
   }
-  const cleanPhone = String(phone).replace(/\D/g, "");
-  if (cleanPhone.length < 9) {
+  const cleanPhone = String(body.phone || "").replace(/\D/g, "");
+  if (cleanPhone.length < 9 || cleanPhone.length > 15) {
     res.status(400).json({ ok: false, error: "Numéro de téléphone invalide." });
     return;
   }
-  const numericAmount = parseInt(amount, 10);
-  if (!numericAmount || numericAmount <= 0) {
-    res.status(400).json({ ok: false, error: "Montant invalide." });
+  const contact = cleanText(body.contact, 120);
+  if (!contact) {
+    res.status(400).json({ ok: false, error: "Indique un contact (WhatsApp ou email)." });
+    return;
+  }
+  const gameId = product.mobile ? cleanText(body.gameId, 64) : "";
+  const server = product.mobile ? cleanText(body.server, 64) : "";
+  if (product.mobile && !gameId) {
+    res.status(400).json({ ok: false, error: "Ton ID en jeu est obligatoire." });
     return;
   }
 
   try {
-    const orderId = `apay_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    // ---- Anti-abus : évite d'inonder un numéro de demandes Mobile Money ----
+    const [ipCount, phoneCount] = await Promise.all([
+      hit(`ip:${clientIp(req)}`, RATE_WINDOW_SECONDS),
+      hit(`phone:${cleanPhone}`, RATE_WINDOW_SECONDS),
+    ]);
+    if (ipCount > MAX_PER_IP || phoneCount > MAX_PER_PHONE) {
+      res.status(429).json({
+        ok: false,
+        error: "Trop de tentatives de paiement. Patiente quelques minutes ou contacte-nous sur WhatsApp.",
+      });
+      return;
+    }
+
+    const orderId = `apay_${Date.now()}_${crypto.randomBytes(4).toString("hex")}`;
+    const publicId = crypto.randomBytes(16).toString("hex");
 
     const openpayRes = await fetch(OPENPAY_URL, {
       method: "POST",
@@ -49,9 +100,9 @@ module.exports = async (req, res) => {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        amount: numericAmount,
+        amount,
         payment_phone_number: cleanPhone,
-        provider: String(provider).toUpperCase(),
+        provider,
         customer_external_id: orderId,
         customer: { name: contact, phone: cleanPhone },
         metadata: { order_id: orderId, product: productLabel },
@@ -89,13 +140,16 @@ module.exports = async (req, res) => {
 
     const orderRecord = {
       reference,
+      orderId,
+      productId: String(body.productId),
       productLabel,
-      amount: numericAmount,
+      qty,
+      amount,
       phone: cleanPhone,
-      provider: String(provider).toUpperCase(),
+      provider,
       contact,
-      gameId: gameId || "",
-      server: server || "",
+      gameId,
+      server,
       status: initialStatus,
       createdAt: new Date().toISOString(),
       notified: false,
@@ -103,23 +157,14 @@ module.exports = async (req, res) => {
 
     if (initialStatus === "success") {
       orderRecord.notified = true;
-      const lines = [
-        "💰 <b>Nouvelle commande payée</b>",
-        `Produit : ${productLabel}`,
-        `Montant : ${numericAmount.toLocaleString("fr-FR")} FCFA`,
-        `Opérateur : ${String(provider).toUpperCase()}`,
-        `Tél. paiement : ${cleanPhone}`,
-        `Contact livraison : ${contact}`,
-      ];
-      if (gameId) lines.push(`ID en jeu : ${gameId}`);
-      if (server) lines.push(`Serveur/Zone : ${server}`);
-      lines.push(`Référence : ${reference}`);
-      await notifyTelegram(lines.join("\n"));
+      await notifyTelegram(paidOrderMessage(orderRecord, reference));
     }
 
     await setOrder(reference, orderRecord);
+    await linkPublicId(publicId, reference);
 
-    res.status(200).json({ ok: true, reference, status: initialStatus });
+    // On ne renvoie PAS la référence OpenPay : seul le serveur la connaît.
+    res.status(200).json({ ok: true, reference: publicId, status: initialStatus, amount, productLabel });
   } catch (err) {
     console.error("Erreur create-payment:", err);
     res.status(500).json({ ok: false, error: "Erreur serveur, réessaie dans un instant." });
