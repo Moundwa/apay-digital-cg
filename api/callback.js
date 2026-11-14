@@ -1,14 +1,12 @@
 const crypto = require("crypto");
-const { getOrder, setOrder } = require("./_kv");
-const { notifyTelegram, paidOrderMessage, escapeHtml } = require("./_telegram");
+const { getOrder } = require("./_kv");
+const { settleOrder } = require("./_payment");
 
-// URL de callback à déclarer chez OpenPay :
+// URL de callback à déclarer dans le tableau de bord OpenPay :
 //   https://www.apay-digital-cg.store/api/callback?secret=<OPENPAY_CALLBACK_SECRET>
-// Sans ce secret, n'importe qui pourrait déclarer une commande "payée".
+// OpenPay ne signe pas ses callbacks : on vérifie ce secret, puis on redemande
+// TOUJOURS le vrai statut à l'API OpenPay avant de valider une commande.
 const CALLBACK_SECRET = process.env.OPENPAY_CALLBACK_SECRET;
-
-const SUCCESS_VALUES = ["success", "paid", "completed", "successful"];
-const FAILURE_VALUES = ["failed", "error", "cancelled", "canceled", "declined"];
 
 function sameSecret(given, expected) {
   const a = Buffer.from(String(given || ""));
@@ -17,71 +15,46 @@ function sameSecret(given, expected) {
 }
 
 module.exports = async (req, res) => {
-  // OpenPay exige impérativement un code HTTP 200, même en cas de souci de notre côté.
+  // OpenPay exige un HTTP 200, sinon il relance (4 tentatives).
   if (req.method !== "POST") {
-    res.status(200).json({ ok: true });
+    res.status(200).json({ success: true });
     return;
   }
 
-  if (!CALLBACK_SECRET) {
-    console.error("OPENPAY_CALLBACK_SECRET manquante : callback ignoré par sécurité.");
-    res.status(200).json({ ok: true });
-    return;
-  }
-  if (!sameSecret(req.query?.secret, CALLBACK_SECRET)) {
-    console.error("Callback refusé : secret absent ou invalide.");
-    res.status(200).json({ ok: true });
+  if (!CALLBACK_SECRET || !sameSecret(req.query?.secret, CALLBACK_SECRET)) {
+    console.error(CALLBACK_SECRET ? "Callback refusé : secret absent ou invalide." : "OPENPAY_CALLBACK_SECRET manquante : callback ignoré.");
+    res.status(200).json({ success: true });
     return;
   }
 
   try {
     const body = req.body || {};
-    const reference = body.reference || body.data?.reference;
-    const rawStatus = (body.status || body.data?.status || "").toString().toLowerCase();
+    // Les retraits programmés arrivent sur la même URL : on ne traite que les paiements.
+    if (body.type && body.type !== "payment") {
+      res.status(200).json({ success: true });
+      return;
+    }
 
+    const reference = body.reference || body.data?.reference;
     if (!reference) {
       console.error("Callback OpenPay sans référence:", body);
-      res.status(200).json({ ok: true });
+      res.status(200).json({ success: true });
       return;
     }
 
     const order = await getOrder(reference);
     if (!order) {
       console.error("Callback pour une référence inconnue:", reference);
-      res.status(200).json({ ok: true });
+      res.status(200).json({ success: true });
       return;
     }
 
-    let isSuccess = SUCCESS_VALUES.includes(rawStatus);
-    const isFailure = FAILURE_VALUES.includes(rawStatus);
-
-    // Si OpenPay indique le montant payé, il doit correspondre exactement à la commande.
-    const paidAmount = body.amount ?? body.data?.amount;
-    if (isSuccess && paidAmount !== undefined && Number(paidAmount) !== Number(order.amount)) {
-      isSuccess = false;
-      console.error("Montant payé différent de la commande:", paidAmount, order.amount, reference);
-      await notifyTelegram(
-        `⚠️ <b>Paiement suspect — NE PAS LIVRER</b>\nRéférence : ${escapeHtml(reference)}\n` +
-          `Montant attendu : ${order.amount} FCFA\nMontant reçu : ${escapeHtml(paidAmount)} FCFA`
-      );
-    }
-
-    // Une commande déjà payée ne repasse jamais à un autre statut.
-    const normalizedStatus =
-      order.status === "success" ? "success" : isSuccess ? "success" : isFailure ? "failed" : order.status;
-
-    const updatedOrder = { ...order, status: normalizedStatus, callbackAt: new Date().toISOString() };
-
-    if (normalizedStatus === "success" && !order.notified) {
-      updatedOrder.notified = true;
-      await notifyTelegram(paidOrderMessage(order, reference));
-    }
-
-    await setOrder(reference, updatedOrder);
-    res.status(200).json({ ok: true });
+    // Le contenu du callback sert seulement de signal : le statut vient de l'API OpenPay.
+    await settleOrder(reference, order);
+    res.status(200).json({ success: true });
   } catch (err) {
     console.error("Erreur callback:", err);
-    // On répond quand même 200 pour éviter des retentatives infinies côté OpenPay.
-    res.status(200).json({ ok: true });
+    // Un code non-200 fait relancer OpenPay : utile si l'API de statut était momentanément indisponible.
+    res.status(500).json({ success: false });
   }
 };
