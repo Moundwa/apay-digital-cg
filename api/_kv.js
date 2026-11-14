@@ -1,9 +1,11 @@
 // Petit client Upstash Redis (REST) — pas de dépendance npm, juste fetch natif.
-// Les variables KV_REST_API_URL / KV_REST_API_TOKEN sont injectées automatiquement
-// par Vercel quand la base "apay-orders" est connectée au projet.
+// Les variables sont injectées automatiquement par Vercel quand la base est
+// connectée au projet. Base actuelle : "apay-orders-2" (préfixe APAY_KV, créée
+// le 14/11/2026). Les anciennes variables KV_* pointent vers "apay-orders",
+// supprimée : elles ne servent plus que de repli.
 
-const KV_URL = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+const KV_URL = process.env.APAY_KV_KV_REST_API_URL || process.env.KV_REST_API_URL;
+const KV_TOKEN = process.env.APAY_KV_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN;
 
 async function command(args) {
   if (!KV_URL || !KV_TOKEN) {
