@@ -7,6 +7,7 @@
 const { getOrder, setOrder, listOrders, hit } = require("./_kv");
 const { settleOrder } = require("./_payment");
 const { clientIp, sameSecret } = require("./_http");
+const { notifyCustomer } = require("./_whatsapp");
 
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN;
 const MAX_FAILED_LOGINS = 10; // par IP et par tranche de 15 minutes
@@ -27,6 +28,8 @@ function publicView(o) {
     delivered: !!o.delivered,
     deliveredAt: o.deliveredAt || null,
     createdAt: o.createdAt,
+    waPaid: o.waPaid || null,
+    waDelivered: o.waDelivered || null,
   };
 }
 
@@ -70,6 +73,8 @@ module.exports = async (req, res) => {
           return;
         }
         updated = { ...order, delivered: true, deliveredAt: new Date().toISOString() };
+        // Message WhatsApp « commande livrée » : une seule fois, même si on annule puis re-marque.
+        if (!order.waDelivered || !order.waDelivered.sent) updated.waDelivered = await notifyCustomer("delivered", updated);
         await setOrder(order.reference, updated);
       } else if (action === "undelivered") {
         updated = { ...order, delivered: false, deliveredAt: null };

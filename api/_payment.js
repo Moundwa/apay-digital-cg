@@ -3,6 +3,7 @@
 // on redemande toujours le statut à l'API (GET /v1/transaction/status/:reference).
 const { setOrder } = require("./_kv");
 const { notifyTelegram, paidOrderMessage, escapeHtml } = require("./_telegram");
+const { notifyCustomer } = require("./_whatsapp");
 
 const OPENPAY_API_KEY = process.env.OPENPAY_API_KEY;
 const STATUS_URL = "https://api.openpay-cg.com/v1/transaction/status/";
@@ -52,6 +53,7 @@ async function settleOrder(reference, order) {
   if (status === "success" && !order.notified) {
     updated.notified = true;
     await notifyTelegram(paidOrderMessage(updated, reference));
+    updated.waPaid = await notifyCustomer("paid", updated); // message WhatsApp au client
   }
   if (status !== order.status || updated.notified !== order.notified || updated.suspectNotified !== order.suspectNotified) {
     await setOrder(reference, updated);

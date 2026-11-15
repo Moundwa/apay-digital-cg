@@ -100,6 +100,17 @@
     return "https://wa.me/" + num + "?text=" + encodeURIComponent(msg);
   }
 
+  function waStatus(o) {
+    const one = (label, w) => {
+      if (!w) return null;
+      if (w.sent) return label + " ✓";
+      if (w.skipped === "contact-non-whatsapp") return label + " : contact email, pas de WhatsApp";
+      if (w.skipped) return null; // WhatsApp pas encore configuré
+      return label + " ✗ (" + (w.error || "échec") + ")";
+    };
+    return [one("Paiement reçu", o.waPaid), one("Livrée", o.waDelivered)].filter(Boolean).join(" · ");
+  }
+
   function card(o) {
     const k = kind(o);
     const c = el("article", "adm-card " + k);
@@ -116,6 +127,7 @@
     row("ID en jeu", o.gameId);
     row("Serveur / Zone", o.server);
     row("Livrée le", o.deliveredAt ? dateFr(o.deliveredAt) : "");
+    row("WhatsApp client", waStatus(o));
     row("Réf. OpenPay", o.reference);
     c.append(dl);
 

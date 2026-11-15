@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const { setOrder, linkPublicId, hit, reserveOrderCode, linkOrderCode } = require("./_kv");
 const { clientIp } = require("./_http");
 const { notifyTelegram, paidOrderMessage } = require("./_telegram");
+const { notifyCustomer } = require("./_whatsapp");
 const CATALOG = require("./_catalog");
 
 const OPENPAY_API_KEY = process.env.OPENPAY_API_KEY;
@@ -158,6 +159,7 @@ module.exports = async (req, res) => {
     if (initialStatus === "success") {
       orderRecord.notified = true;
       await notifyTelegram(paidOrderMessage(orderRecord, reference));
+      orderRecord.waPaid = await notifyCustomer("paid", orderRecord);
     }
 
     await setOrder(reference, orderRecord);
